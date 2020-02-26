@@ -1,21 +1,22 @@
 import React, { useState } from "react";
-import Nav from "./components/Nav";
-import Sidebar from "./components/SideBar";
-
-import LeaveTable from "./components/LeaveTable";
-import LeaveList from "./components/LeaveList";
-import { connect } from "react-redux";
-
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
-import EmpDashboard from "./components/EmpDashboard";
-import ApplyLeave from "./components/ApplyLeave";
-import Login from "./components/Login";
-
+//Fixed components
+import Nav from "./components/NavAndSide/Nav";
+import Sidebar from "./components/NavAndSide/SideBar";
+//Pages
+import EmpDashboard from "./pages/EmpDashboard/EmpDashboard";
+import ApplyLeave from "./pages/ApplyLeave/ApplyLeave";
+import Login from "./pages/Login/Login";
+//css file import
 import "./App.css";
+
+//Reducer import
+import { connect } from "react-redux";
+//Router import
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App(props) {
   const [isAuthenticated, setAuthentication] = useState(false);
+
   return isAuthenticated ? (
     <Router basename={`${process.env.PUBLIC_URL}/`}>
       <div className="App" id="app">
@@ -45,6 +46,8 @@ function App(props) {
     <Login setAuthentication={setAuthentication} />
   );
 }
+
+//dispatcher code
 const mapDispatchToProps = dispatch => {
   return {
     addLeave: () =>

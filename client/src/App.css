@@ -9,6 +9,6 @@
 
 #main{
   display: grid;
-  grid-template-columns: 21vw 79vw;
+  grid-template-columns: 17vw 79vw;
 }
 
