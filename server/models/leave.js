@@ -5,11 +5,17 @@
  *      Leave:
  *        type: object
  *        required:
+ *          - employeeId
+ *          - approverId    
  *          - startDate
  *          - endDate
  *          - leaveType
  *          - halfDay
  *        properties:
+ *          employeeId:
+ *              type: string
+ *          approverId:
+ *              type: string
  *          startDate:
  *              type: string
  *          endDate:
@@ -29,6 +35,10 @@ const Joi = require('joi');
 const mongoose = require('mongoose');
 
  const leave = new mongoose.Schema({
+    employeeId: {
+        type: String,
+        required: true
+    },
     startDate: {
         type: Date,
         required: true
@@ -54,6 +64,8 @@ const LeaveType = mongoose.model('LeaveType', leaveTypeSchema)
 
 function validateLeave(leave) {
     const schema = {
+        employeeId: Joi.required().string(),
+        approverId: Joi.required().string(),
         startDate: Joi.date().required(),
         endDate: Joi.date().required(),
         leaveType: Joi.string().required(),

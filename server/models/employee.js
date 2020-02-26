@@ -86,6 +86,18 @@ const Employee = mongoose.model('Employee', new mongoose.Schema({
         minlength: 5,
         maxlength: 50
     },
+    status: {
+        type: String,
+        required: true,
+        minlength: 3,
+        maxlength: 50
+    },
+    gender: {
+        type: String,
+        required: true,
+        minlength: 4,
+        maxlength: 10
+    },
     role: {
         type: String,
         required: true,
@@ -94,8 +106,6 @@ const Employee = mongoose.model('Employee', new mongoose.Schema({
     },
     approver: {
         type: String,
-        required: true,
-        minlength: 5,
         maxlength: 50
     },
     password: {
@@ -123,8 +133,9 @@ function validateEmployee(employee) {
         email: Joi.string().min(5).max(255).email(),
         doj: Joi.string().min(5).max(255).required(),
         gender: Joi.string().valid("male", "female", "other"),
+        status: Joi.string().required(),
         role: Joi.string().min(5).max(255).required(),
-        approver: Joi.string().min(5).max(255).required().email(),
+        approver: Joi.required().allow(""),
         password: Joi.string().min(5).max(1024).required(),
     }
     return Joi.validate(employee, schema);
