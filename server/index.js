@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const employee = require('./routes/employee')
 const auth = require('./routes/auth')
+const leave = require('./routes/leave')
 const express = require('express');
 const app = express();
 const swaggerUi = require('swagger-ui-express');
@@ -46,6 +47,7 @@ app.get(
 );
 app.use('/api/employee', employee);
 app.use('/api/auth', auth);
+app.use('/api/leave', leave);
 
 mongoose.connect('mongodb://localhost/LMS', { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true})
     .then(() => console.log("Sccessfully connected to mongo db"))

@@ -11,6 +11,7 @@
  *          - endDate
  *          - leaveType
  *          - halfDay
+ *          - status
  *        properties:
  *          employeeId:
  *              type: string
@@ -26,6 +27,8 @@
  *              type: boolean 
  *          description:
  *              type: string 
+ *          status:
+ *              type: string 
  *        example:
  *           name: Alexander
  *           email: fake@email.com
@@ -34,10 +37,14 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
 
- const leave = new mongoose.Schema({
+ const leaveSchema = new mongoose.Schema({
     employeeId: {
         type: String,
-        required: true
+        //required: true
+    },
+    approverId: {
+        type: String,
+        //required: true
     },
     startDate: {
         type: Date,
@@ -48,7 +55,7 @@ const mongoose = require('mongoose');
         required: true
     },
     leaveType: {
-        type: string,
+        type: String,
         required: true  
     },
     halfDay: {
@@ -57,24 +64,28 @@ const mongoose = require('mongoose');
     },
     description: {
         type: String,
+    },
+    status: {
+        type: String,
+        required: true
     }
 })
 
-const LeaveType = mongoose.model('LeaveType', leaveTypeSchema)
+const Leave = mongoose.model('Leave', leaveSchema)
 
 function validateLeave(leave) {
     const schema = {
-        employeeId: Joi.required().string(),
-        approverId: Joi.required().string(),
-        startDate: Joi.date().required(),
-        endDate: Joi.date().required(),
-        leaveType: Joi.string().required(),
+        employeeId: Joi.string().required(),
+        approverId: Joi.string().required(),
+        startDate: Joi.date().iso().required(),
+        endDate: Joi.date().iso().required(),
+        leaveType: Joi.string().valid("paid", "casual", "sick").required(),
         halfDay: Joi.boolean().required(),
         description: Joi.string()
     }
     return Joi.validate(leave, schema);
 }
 
-exports.LeaveType = LeaveType
-exports.schema = leaveTypeSchema
+exports.Leave = Leave
+exports.schema = leaveSchema
 exports.validate = validateLeave
