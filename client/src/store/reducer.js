@@ -3,14 +3,16 @@ const initialState = {
     {
       id: 1,
       type: "Sick",
-      date: "14 Feb 2020",
+      from: "14 Feb 2020",
+      to: "15 Feb 2020",
       days: 1,
       status: "pending"
     },
     {
       id: 2,
       type: "Casual",
-      date: "14 Feb 2020",
+      from: "14 Feb 2020",
+      to: "15 Feb 2020",
       days: 2,
       status: "rejected"
     }

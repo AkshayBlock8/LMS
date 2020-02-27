@@ -17,10 +17,11 @@ div#ham{
     font-weight: bold;
 }
 div#notep{
-    
+    padding-top:1.2rem;
     text-align: left;
     color:#05b7e8;
     font-weight: bold;
+    
 }
 
 #user_img{
