@@ -73,6 +73,52 @@ router.get("/:id", async (req, res) => {
       );
   });
 
+  router.put('/:id',async(req,res)=>{
+    const id = req.params.id;
+
+    let validationResult = validate(req.body);
+    if(validationResult.error) return sendValidationError(validationResult.error, res); 
+
+    if(req.body.role !== "admin") {
+        let approver = await Employee.findById(mongoose.Types.ObjectId(req.body.approver))
+        if(!approver) return res.status(400).send('Entered approver doesn\'t exist')
+    }
+
+    const availed = {
+        sick: 0,
+        casual: 0,
+        paid: 0
+    };
+    validationResult = leaveType.validate(availed);
+    if(validationResult.error) return sendValidationError(validationResult.error, res)
+
+    const available =  {
+        sick: 10,
+        casual: 10,
+        paid: 10
+    };
+    validationResult = leaveType.validate(available);
+    if(validationResult.error) return sendValidationError(validationResult.error, res)
+
+    const total = {
+        sick: 10,
+        casual: 10,
+        paid: 10
+    };
+    validationResult = leaveType.validate(total);
+    if(validationResult.error) return sendValidationError(validationResult.error, res)
+
+    let employeeSchema = _.pick(req.body, ["firstName", "middleName", "lastName", "email", "doj", "role", "approver", "gender", "password", "status"]);
+    employeeSchema.available = available;
+    employeeSchema.availed = availed;
+    employeeSchema.total = total;
+
+    let employeeToBeUpdated = await Employee.findById(id);
+    employeeToBeUpdated.set(req.body);
+    await employeeToBeUpdated.save();
+    res.send(_.pick(employeeToBeUpdated,["firstName", "secondName", "lastName", "email", "doj", "role", "approver", "gender", "password"]));
+  });
+
 router.post('/', async (req, res) => { 
     let validationResult = validate(req.body);
     if(validationResult.error) return sendValidationError(validationResult.error, res);
@@ -113,8 +159,8 @@ router.post('/', async (req, res) => {
     employeeSchema.available = available;
     employeeSchema.availed = availed;
     employeeSchema.total = total;
-    
 
+    
     employee = new Employee(employeeSchema);
     await employee.save();
     res.send(_.pick(employee, ["firstName", "secondName", "lastName", "email", "doj", "role", "approver", "gender", "password"]));
