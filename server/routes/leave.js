@@ -4,6 +4,7 @@ const _ = require("lodash")
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose')
+const Joi = require("joi")
 
 /**
  * @swagger
@@ -43,9 +44,7 @@ function getLeaveDuration(start, end) {
     let endDate = new Date(end)
     let count = 0;
     for(var d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
-        console.log(d);
         let day = d.getDay()
-        console.log(day)
         if(day == 0 || day == 6) {
             continue;
         }
@@ -64,6 +63,8 @@ router.post('/', async (req, res) => {
     let approver = await Employee.findById(mongoose.Types.ObjectId(req.body.approverId));
     if(!approver) return res.status(400).send('Invalid Approver Id')
 
+    if(employee.approver !== approver._id.toString()) return res.status(400).send(`${req.body.approverId} is not the approver of ${req.body.employeeId}`)
+
     let leaveDuration = getLeaveDuration(req.body.startDate, req.body.endDate);
     if(employee.available[req.body.leaveType] < leaveDuration) return res.status(400).send('Employee Does not have that many leaves')
 
@@ -76,6 +77,71 @@ router.post('/', async (req, res) => {
     leave = new Leave(leaveSchema);
     await leave.save();
     res.send(leave);
+})
+
+function validateStatus(status) {
+    const schema = {
+        status: Joi.string().valid('pending', 'approved', 'rejected')
+    }
+    return Joi.validate(status, schema);
+}
+
+router.get('/employee/:employeeId/:status', async (req, res) => {
+    const { status, employeeId } = req.params
+    console.log(status)
+    let employee = await Employee.findById(mongoose.Types.ObjectId(employeeId));
+    if(!employee) return res.status(400).send('Invalid Employee Id')
+
+    const { error } = validateStatus(_.pick(req.params, ["status"]))
+    if(error) return res.status(400).send('Invalid status entered')
+
+    if(error)
+        leaves = await Leave.find({ employeeId: employeeId })
+    else
+        leaves = await Leave.find({ status: status, employeeId: employeeId })
+    res.send(leaves)
+})
+
+router.get('/approver/:employeeId/:status', async (req, res) => {
+    const { status, employeeId } = req.params
+    console.log(status)
+    let employee = await Employee.findById(mongoose.Types.ObjectId(employeeId));
+    if(!employee) return res.status(400).send('Invalid Employee Id')
+
+    const { error } = validateStatus(_.pick(req.params, ["status"]))
+    let leaves;
+    if(error)
+        leaves = await Leave.find({ approverId: employeeId })
+    else
+        leaves = await Leave.find({ status: status, approverId: employeeId })
+    res.send(leaves)
+})
+
+router.put('/', async (req, res) => {
+    let validationResult = validate(_.pick(req.body, ["employeeId", "approverId", "startDate", "endDate", "leaveType", "halfDay", "description"]));
+    if(validationResult.error) return sendValidationError(validationResult.error, res);
+
+    const leave = await Leave.findById(req.body._id);
+    if(!leave) return res.status(400).send('Invalid Leave Id provided')
+    if(req.body.status === "rejected" && leave.status === "pending") {
+        const employee = await Employee.findById(req.body.employeeId)
+        if(!employee) return res.status(400).send('Invalid Employee Id')
+
+        employee.available[req.body.leaveType] += getLeaveDuration(req.body.startDate, req.body.endDate);
+        employee.availed[req.body.leaveType] -= getLeaveDuration(req.body.startDate, req.body.endDate);
+
+        await employee.save();
+        leave.status = "rejected";
+        await leave.save();
+        return res.send(leave)
+    } else if(req.body.status === "approved" && leave.status === "pending") {
+        const employee = await Employee.findById(req.body.employeeId)
+        if(!employee) return res.status(400).send('Invalid Employee Id')
+
+        leave.status = "approved";
+        await leave.save();
+        return res.send(leave)
+    }
 })
 
 module.exports = router
