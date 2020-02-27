@@ -33,7 +33,7 @@ const options = {
         }
       ]
     },
-    apis: ["./models/employee.js", "./models/leaveType.js", "./models/leave.js", "./routes/employee.js", "./routes/leave.js"]
+    apis: ["./models/employee.js", "./models/leaveType.js", "./models/leave.js", "./routes/employee.js", "./routes/leave.js", "./routes/auth.js"]
 };
 const specs = swaggerJsdoc(options);
 

@@ -28,12 +28,12 @@ const Joi = require("joi")
  *              $ref: '#/components/schemas/Leave'
  *
  *            example:
- *              employeeId: 5e5644860cf7b449936036ea,
- *              approverId: 5e564317ef4e004870fc701f,
- *              startDate: 2020-02-29,
- *              endDate: 2020-03-05,
- *              leaveType: sick,
- *              halfDay: false,
+ *              employeeId: 5e5644860cf7b449936036ea
+ *              approverId: 5e564317ef4e004870fc701f
+ *              startDate: 2020-02-29
+ *              endDate: 2020-03-05
+ *              leaveType: sick
+ *              halfDay: false
  *              description: desc
  *      responses:
  *        "200":
@@ -84,26 +84,26 @@ const Joi = require("joi")
  *            examples:
  *              Rejection:
  *                value:
- *                  _id: 5e577322c048ad29414695bf,
- *                  employeeId: 5e5644860cf7b449936036ea,
- *                  approverId: 5e564317ef4e004870fc701f,
- *                  startDate: 2020-02-29,
- *                  endDate: 2020-03-05,
- *                  leaveType: sick,
- *                  halfDay: false,
- *                  status: rejected,
+ *                  _id: 5e577322c048ad29414695bf
+ *                  employeeId: 5e5644860cf7b449936036ea
+ *                  approverId: 5e564317ef4e004870fc701f
+ *                  startDate: 2020-02-29
+ *                  endDate: 2020-03-05
+ *                  leaveType: sick
+ *                  halfDay: false
+ *                  status: rejected
  *                  description: desc
  *
  *              Approval:
  *                value:
- *                  _id: 5e577322c048ad29414695bf,
- *                  employeeId: 5e5644860cf7b449936036ea,
- *                  approverId: 5e564317ef4e004870fc701f,
- *                  startDate: 2020-02-29,
- *                  endDate: 2020-03-05,
- *                  leaveType: sick,
- *                  halfDay: false,
- *                  status: approved,
+ *                  _id: 5e577322c048ad29414695bf
+ *                  employeeId: 5e5644860cf7b449936036ea
+ *                  approverId: 5e564317ef4e004870fc701f
+ *                  startDate: 2020-02-29
+ *                  endDate: 2020-03-05
+ *                  leaveType: sick
+ *                  halfDay: false
+ *                  status: approved
  *                  description: desc
  *
  *      responses:
