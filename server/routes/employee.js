@@ -72,6 +72,59 @@ const mongoose = require('mongoose')
  *            application/json:
  *              schema:
  *                $ref: '#/components/schemas/Employee'
+ *         "400":
+ *         description: A user schema
+ *          content:
+ *            text/plain:
+ *              schema:
+ *                 type: string
+ *                  example: record not found
+ *
+ *  /employee/:id
+ *    put:
+ *      summary: Updates the employee record
+ *      tags: [Employees]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Employee'
+ * 
+ *        examples:
+ *          examples:
+ *              Admin:
+ *                value:
+ *                  firstName: Akshay
+ *                  lastName: Kumar
+ *                  email: akshay.kumar@block8.com
+ *                  doj: 2020-02-09
+ *                  role: admin
+ *                  approver: ""
+ *                  gender: male
+ *                  status: active
+ *                  password: "12111"
+ *
+ *              Employee:
+ *                value:
+ *                  firstName: Akshay
+ *                  lastName: Kumar
+ *                  email: akshay.kumar@block8.com
+ *                  doj: 2020-02-09
+ *                  role: employee
+ *                  approver: 5e5644860cf7b449936036ea
+ *                  gender: male
+ *                  status: active
+ *                  password: "12111"
+ *
+ *      responses:
+ *        "200":
+ *          description: A user schema
+ *          content:
+ *            application/json:
+ *              schema:
+ *                  $ref: '#/components/schemas/Employee'
+ *
  */
 
 function sendValidationError(error, res) {
