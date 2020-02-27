@@ -51,6 +51,28 @@ function sendValidationError(error, res) {
     return res.status(400).send(error.details[0].message);
 }
 
+router.get("/:id", async (req, res) => {
+    const id = req.params.id;
+    let employee = await Employee.findById(id);
+    if (!employee) return res.status(400).send("record not found");
+    res
+      .status(200)
+      .send(
+        _.pick(employee, [
+          "firstName",
+          "secondName",
+          "lastName",
+          "email",
+          "doj",
+          "status",
+          "role",
+          "approver",
+          "gender",
+          "password"
+        ])
+      );
+  });
+
 router.post('/', async (req, res) => { 
     let validationResult = validate(req.body);
     if(validationResult.error) return sendValidationError(validationResult.error, res);
