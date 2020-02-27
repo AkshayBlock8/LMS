@@ -29,9 +29,6 @@
  *              type: string 
  *          status:
  *              type: string 
- *        example:
- *           name: Alexander
- *           email: fake@email.com
  */
 
 const Joi = require('joi');

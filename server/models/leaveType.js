@@ -15,9 +15,7 @@
  *              type: integer
  *          sick:
  *              type: integer 
- *        example:
- *           name: Alexander
- *           email: fake@email.com
+ *
  */
 
  const Joi = require('joi');

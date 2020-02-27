@@ -25,6 +25,32 @@ const mongoose = require('mongoose')
  *          application/json:
  *            schema:
  *              $ref: '#/components/schemas/Employee'
+ *
+ *            examples:
+ *              Admin:
+ *                value:
+ *                  firstName: Akshay
+ *                  lastName: Kumar
+ *                  email: akshay.kumar@block8.com
+ *                  doj: 2020-02-09
+ *                  role: admin
+ *                  approver: ""
+ *                  gender: male
+ *                  status: active
+ *                  password: "12111"
+ *
+ *              Employee:
+ *                value:
+ *                  firstName: Akshay
+ *                  lastName: Kumar
+ *                  email: akshay.kumar@block8.com
+ *                  doj: 2020-02-09
+ *                  role: employee
+ *                  approver: 5e5644860cf7b449936036ea
+ *                  gender: male
+ *                  status: active
+ *                  password: "12111"
+ *
  *      responses:
  *        "200":
  *          description: A user schema
@@ -32,9 +58,10 @@ const mongoose = require('mongoose')
  *            application/json:
  *              schema:
  *                $ref: '#/components/schemas/Employee'
+ *
  *  /employee/:id:
  *    get:
- *      summary: Get Employee by Id
+ *      summary: Get Employee by Id, employee id must be provided as :id
  *      tags: [Employees]
  *      requestBody:
  *        required: true

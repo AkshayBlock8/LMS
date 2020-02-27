@@ -18,7 +18,7 @@ const Joi = require("joi")
  * path:
  *  /leave/:
  *    post:
- *      summary: Create a new employee
+ *      summary: Create a new leave, please make sure that the employeeid and the approver id are valid
  *      tags: [Leaves]
  *      requestBody:
  *        required: true
@@ -26,13 +26,96 @@ const Joi = require("joi")
  *          application/json:
  *            schema:
  *              $ref: '#/components/schemas/Leave'
+ *
+ *            example:
+ *              employeeId: 5e5644860cf7b449936036ea,
+ *              approverId: 5e564317ef4e004870fc701f,
+ *              startDate: 2020-02-29,
+ *              endDate: 2020-03-05,
+ *              leaveType: sick,
+ *              halfDay: false,
+ *              description: desc
  *      responses:
  *        "200":
- *          description: A user schema
+ *          description: A Leave Schema
  *          content:
  *            application/json:
  *              schema:
  *                $ref: '#/components/schemas/Leave'
+ *
+ *  /leave/employee/:employeeId/:status:
+ *    get:
+ *      summary: Get leaves which have the employee id as the current employee
+ *      tags: [Leaves]
+ *      responses:
+ *        "200":
+ *          description: A leave schema
+ *          content:
+ *            application/json:
+ *              schema:
+ *                  type: array
+ *                  items:
+ *                      $ref: '#/components/schemas/Leave'
+ *
+ *  /leave/approver/:employeeId/:status:
+ *    get:
+ *      summary: Get leaves which have the approver id as the current employee
+ *      tags: [Leaves]
+ *      responses:
+ *        "200":
+ *          description: A leave schema
+ *          content:
+ *            application/json:
+ *              schema:
+ *                  type: array
+ *                  items:
+ *                      $ref: '#/components/schemas/Leave'
+ *
+ *  /leave:
+ *    put:
+ *      summary: Updates the status of the given leave
+ *      tags: [Leaves]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Leave'
+ *            examples:
+ *              Rejection:
+ *                value:
+ *                  _id: 5e577322c048ad29414695bf,
+ *                  employeeId: 5e5644860cf7b449936036ea,
+ *                  approverId: 5e564317ef4e004870fc701f,
+ *                  startDate: 2020-02-29,
+ *                  endDate: 2020-03-05,
+ *                  leaveType: sick,
+ *                  halfDay: false,
+ *                  status: rejected,
+ *                  description: desc
+ *
+ *              Approval:
+ *                value:
+ *                  _id: 5e577322c048ad29414695bf,
+ *                  employeeId: 5e5644860cf7b449936036ea,
+ *                  approverId: 5e564317ef4e004870fc701f,
+ *                  startDate: 2020-02-29,
+ *                  endDate: 2020-03-05,
+ *                  leaveType: sick,
+ *                  halfDay: false,
+ *                  status: approved,
+ *                  description: desc
+ *
+ *      responses:
+ *        "200":
+ *          description: A leave schema
+ *          content:
+ *            application/json:
+ *              schema:
+ *                  type: array
+ *                  items:
+ *                      $ref: '#/components/schemas/Leave'
+ *
  */
 
 function sendValidationError(error, res) {

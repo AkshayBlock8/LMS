@@ -23,7 +23,7 @@
  *          lastName:
  *              type: string
  *          email:
- *              type: email
+ *              type: string
  *              format: email
  *              descriptions: Email for the user, needs to be unique.
  *          doj: 
@@ -42,15 +42,6 @@
  *              $ref: '#/components/schemas/LeaveType' 
  *          total:
  *              $ref: '#/components/schemas/LeaveType' 
- *        example:
- *           firstName: Akshay
- *           lastName: Kumar
- *           email: akshay.kumar@block8.com
- *           doj: 09-02-2020
- *           role: admin
- *           approver: akshay.kumar@block8.com
- *           gender: male
- *           password: 123456789
  */
 
 const Joi = require('joi');
