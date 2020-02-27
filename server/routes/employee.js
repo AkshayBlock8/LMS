@@ -61,6 +61,13 @@ const mongoose = require('mongoose')
  *
  *  /employee/:id:
  *    get:
+ *      parameters:
+ *      - in: path
+ *        name: id
+ *        required: true
+ *        schema:
+ *          type: string
+ *        description: The _id of the document
  *      summary: Get Employee by Id, employee id must be provided as :id
  *      tags: [Employees]
  *      requestBody:
@@ -72,6 +79,58 @@ const mongoose = require('mongoose')
  *            application/json:
  *              schema:
  *                $ref: '#/components/schemas/Employee'
+ *        "400":
+ *          description: A user schema
+ *          content:
+ *            text/plain:
+ *              schema:
+ *                 type: string
+ *                 example: record not found
+ *
+ *    put:
+ *      summary: Updates the employee record
+ *      tags: [Employees]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Employee'
+ * 
+ *        examples:
+ *          examples:
+ *              Admin:
+ *                value:
+ *                  firstName: Akshay
+ *                  lastName: Kumar
+ *                  email: akshay.kumar@block8.com
+ *                  doj: 2020-02-09
+ *                  role: admin
+ *                  approver: ""
+ *                  gender: male
+ *                  status: active
+ *                  password: "12111"
+ *
+ *              Employee:
+ *                value:
+ *                  firstName: Akshay
+ *                  lastName: Kumar
+ *                  email: akshay.kumar@block8.com
+ *                  doj: 2020-02-09
+ *                  role: employee
+ *                  approver: 5e5644860cf7b449936036ea
+ *                  gender: male
+ *                  status: active
+ *                  password: "12111"
+ *
+ *      responses:
+ *        "200":
+ *          description: A user schema
+ *          content:
+ *            application/json:
+ *              schema:
+ *                  $ref: '#/components/schemas/Employee'
+ *
  */
 
 function sendValidationError(error, res) {
@@ -105,6 +164,9 @@ router.get("/:id", async (req, res) => {
 
     let validationResult = validate(req.body);
     if(validationResult.error) return sendValidationError(validationResult.error, res); 
+
+    let employee = await Employee.findOne({ email: req.body.email });
+    if (employee && employee._id!=id) return res.status(400).send('Email Already in use')
 
     if(req.body.role !== "admin") {
         let approver = await Employee.findById(mongoose.Types.ObjectId(req.body.approver))
