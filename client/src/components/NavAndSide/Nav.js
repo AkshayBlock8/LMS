@@ -1,7 +1,9 @@
-import React from "react";
+import React,{useContext}from "react";
+import {EmpIdContext} from '../../contexts/EmpId/EmpIdContext'
 import "./nav.css";
 
 function Nav(props) {
+  let [empid,setEmpid]=useContext(EmpIdContext)
   return (
     <div id="nav">
       
@@ -14,23 +16,16 @@ function Nav(props) {
       </div>
 
       <div id="notep">
-        <span>LMS | EMPLOYEE</span>
+        <span>LMS | {empid.role.toUpperCase()} </span>
       </div>
 
-      <div id="log" onClick={() => props.setAuthentication(false)} >
+      <div id="log">
         <img
           src={require("../../icons/userb.png")}
           id="user_img"
           alt="User"
-        ></img>{" "}
-        <span id="sep">|</span>{" "}
-        <a href="/">
-          <img
-            src={require("../../icons/logout.png")}
-            id="logout_img"
-            alt="User"
-          ></img>
-        </a>
+        ></img>{" "+empid.name}
+        
       </div>
 
     </div>

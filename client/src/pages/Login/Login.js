@@ -1,41 +1,35 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import { useFormState } from "react-use-form-state";
+import { EmpIdContext } from "../../contexts/EmpId/EmpIdContext";
+import axios from 'axios'
 import "./login.css";
 
 function Login(props) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const staticEmail = "ravi@gmail.com";
-  const staticPassword = "password1";
+   //getting context
+  let [empid, setEmpid] = useContext(EmpIdContext);
 
-  function validateForm() {
-    return email.length > 0 && password.length > 0;
-  }
+  //setting formState
+  let [formState, { text, password, email }] = useFormState();
 
-  function handleSubmit(event) {
+    const handleSubmit = event => {
     event.preventDefault();
-  }
-
-  function emailChange(e) {
-    setEmail(e.target.value);
-  }
-  function passwordChange(e) {
-    setPassword(e.target.value);
-    console.log(password);
-  }
-
-  function buttonClick(event) {
-    event.preventDefault();
-    if (password === staticPassword && email === staticEmail) {
-     
-
-      //this is where api will get hit
-      props.setAuthentication(true);
-
-    } else {
-      console.log("not working");
-      alert("enter correct details");
-    }
-  }
+    let emailV=formState.values.email
+    let passw=formState.values.passw
+    axios
+      .post("http://10.9.8.150:5000/api/auth", {
+        email:emailV,
+        password: passw
+        
+      })
+      .then(res => {
+        console.log(res.data);
+        setEmpid(res.data)
+      })
+      .catch((err)=>{
+        console.log(err)
+        alert('wrong credentials')
+      })
+  };
 
   return (
     <div id="loginBoard">
@@ -50,16 +44,11 @@ function Login(props) {
       </div>
       <form onSubmit={handleSubmit}>
         <div className="groupfield">
-          <input type="text" placeholder="Email" onChange={emailChange} />
+          <input placeholder="Email" {...email("email")} />
         </div>
 
         <div className="groupfield">
-          <input
-            id="passwordmask"
-            type="password"
-            placeholder="Password"
-            onChange={passwordChange}
-          />
+          <input {...password("passw")} />
         </div>
 
         <div id="buttonA">
@@ -68,15 +57,7 @@ function Login(props) {
           <a href="/">Forgot Password</a>
           <br />
           <br />
-          <button
-            onClick={buttonClick}
-            block
-            bsSize="large"
-            disabled={!validateForm()}
-            type="submit"
-          >
-            Log in
-          </button>
+          <button type="submit">Log in</button>
         </div>
       </form>
     </div>
