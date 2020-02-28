@@ -44,8 +44,21 @@ const em = require('../utils/email')
  *              schema:
  *                $ref: '#/components/schemas/Leave'
  *
- *  /leave/employee/:employeeId/:status:
+ *  /leave/employee/{employeeId}/{status}:
  *    get:
+ *      parameters:
+ *      - in: path
+ *        name: employeeId
+ *        required: true
+ *        schema:
+ *          type: string
+ *        description: The _id of the employee document
+ *      - in: path
+ *        name: status
+ *        required: true
+ *        schema:
+ *          type: string
+ *        description: The status of the leaves you want to fetch
  *      summary: Get leaves which have the employee id as the current employee
  *      tags: [Leaves]
  *      responses:
@@ -58,8 +71,21 @@ const em = require('../utils/email')
  *                  items:
  *                      $ref: '#/components/schemas/Leave'
  *
- *  /leave/approver/:employeeId/:status:
+ *  /leave/approver/{employeeId}/{status}:
  *    get:
+ *      parameters:
+ *      - in: path
+ *        name: employeeId
+ *        required: true
+ *        schema:
+ *          type: string
+ *        description: The _id of the employee document
+ *      - in: path
+ *        name: status
+ *        required: true
+ *        schema:
+ *          type: string
+ *        description: The status of the leaves you want to fetch 
  *      summary: Get leaves which have the approver id as the current employee
  *      tags: [Leaves]
  *      responses:

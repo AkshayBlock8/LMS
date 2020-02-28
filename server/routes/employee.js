@@ -59,7 +59,7 @@ const mongoose = require('mongoose')
  *              schema:
  *                $ref: '#/components/schemas/Employee'
  *
- *  /employee/:id:
+ *  /employee/{id}/:
  *    get:
  *      parameters:
  *      - in: path
