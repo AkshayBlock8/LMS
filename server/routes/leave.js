@@ -233,6 +233,14 @@ router.put('/', async (req, res) => {
         await employee.save();
         leave.status = "rejected";
         await leave.save();
+        let mailOptionsRejected ={
+            from: '"Admin LMS" lmsblock8@gmail.com', // sender address
+            to: employee.email, // list of receivers
+            subject: "[REJECTED]-"+leave.leaveType.charAt(0).toUpperCase()+leave.leaveType.slice(1)+" leave applied by "+employee.firstName, // Subject line
+            // text: "Hello world?", // plain text body
+            html: "<p>The "+leave.leaveType+"</b>"+" leave that you applied from "+"<b>"+leave.startDate+"</b>"+" to "+"<b>"+leave.endDate+"</b> has been rejected." // html body
+        };
+        em.email(mailOptionsRejected);
         return res.send(leave)
     } else if(req.body.status === "approved" && leave.status === "pending") {
         const employee = await Employee.findById(req.body.employeeId)
@@ -240,6 +248,14 @@ router.put('/', async (req, res) => {
 
         leave.status = "approved";
         await leave.save();
+        let mailOptionsApproved ={
+            from: '"Admin LMS" lmsblock8@gmail.com', // sender address
+            to: employee.email, // list of receivers
+            subject: "[APPROVED]-"+leave.leaveType.charAt(0).toUpperCase()+leave.leaveType.slice(1)+" leave applied by "+employee.firstName, // Subject line
+            // text: "Hello world?", // plain text body
+            html: "<p>The "+leave.leaveType+"</b>"+" leave that you applied from "+"<b>"+leave.startDate+"</b>"+" to "+"<b>"+leave.endDate+"</b> has been approved." // html body
+        };
+        em.email(mailOptionsApproved);
         return res.send(leave)
     }
 })
