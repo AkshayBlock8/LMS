@@ -54,6 +54,7 @@ app.use('/api/auth', auth);
 app.use('/api/leave', leave);
 
 mongoose.connect('mongodb://localhost/LMS', { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true})
+//mongoose.connect('mongodb+srv://lmsteam123:block8lms@lms-app-nqyg4.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true})
     .then(() => console.log("Sccessfully connected to mongo db"))
     .catch((err) => console.log(`Error in connection: ${err}`))
 

@@ -49,7 +49,8 @@ router.post('/', async (req, res) => {
     const token = {
         _id: employee._id,
         name: `${ employee.firstName } ${ employee.lastName }`,
-        email: employee.email
+        email: employee.email,
+        role: employee.role
     }
     res.send(token);
 })
