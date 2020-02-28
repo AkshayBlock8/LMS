@@ -167,7 +167,15 @@ router.post('/', async (req, res) => {
         // text: "Hello world?", // plain text body
         html: "<p><b>"+employee.firstName+"</b>"+" applied for a "+"<b>"+leaveSchema.leaveType+"</b>"+" leave from "+"<b>"+leaveSchema.startDate+"</b>"+" to "+"<b>"+leaveSchema.endDate+"</b>"+"<p><b>Reason:</b>"+leaveSchema.description // html body
     };
+    let mailOptionsEmp ={
+        from: '"Admin LMS" lmsblock8@gmail.com', // sender address
+        to: employee.email, // list of receivers
+        subject: ""+leaveSchema.leaveType.charAt(0).toUpperCase()+leaveSchema.leaveType.slice(1)+" leave successfully applied by "+employee.firstName, // Subject line
+        // text: "Hello world?", // plain text body
+        html: "<p><b>You</b>"+" applied for a "+"<b>"+leaveSchema.leaveType+"</b>"+" leave from "+"<b>"+leaveSchema.startDate+"</b>"+" to "+"<b>"+leaveSchema.endDate+"</b>"+"<p><b>Reason:</b>"+leaveSchema.description // html body
+    };
     em.email(mailOptions);
+    em.email(mailOptionsEmp);
     res.send(leave);
 })
 
