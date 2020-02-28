@@ -163,9 +163,20 @@ function getLeaveDuration(start, end) {
     return count;
 }
 
+function invalidDays(startDate, endDate, halfDay) {
+    if(!halfDay)
+        return false;
+
+    let start = new Date(startDate)
+    let end = new Date(endDate)
+    return start.toString() !== end.toString()
+}
+
 router.post('/', async (req, res) => { 
     let validationResult = validate(req.body);
     if(validationResult.error) return sendValidationError(validationResult.error, res);
+
+    if(invalidDays(req.body.startDate, req.body.endDate, req.body.halfDay)) return res.status(400).send('for half day start date and end date should be same')
     
     let employee = await Employee.findById(mongoose.Types.ObjectId(req.body.employeeId));
     if(!employee) return res.status(400).send('Invalid Employee Id')
@@ -178,8 +189,13 @@ router.post('/', async (req, res) => {
     let leaveDuration = getLeaveDuration(req.body.startDate, req.body.endDate);
     if(employee.available[req.body.leaveType] < leaveDuration) return res.status(400).send('Employee Does not have that many leaves')
 
-    employee.available[req.body.leaveType] -= leaveDuration
-    employee.availed[req.body.leaveType] += leaveDuration
+    if(req.body.halfDay) {
+        employee.available[req.body.leaveType] -= 0.5
+        employee.availed[req.body.leaveType] += 0.5    
+    } else {
+        employee.available[req.body.leaveType] -= leaveDuration
+        employee.availed[req.body.leaveType] += leaveDuration    
+    }
     await employee.save()
     let leaveSchema = _.pick(req.body, ["employeeId", "approverId", "startDate", "endDate", "leaveType", "halfDay", "description", "status"])
 
@@ -260,10 +276,13 @@ router.put('/', async (req, res) => {
     if(req.body.status === "rejected" && leave.status === "pending") {
         const employee = await Employee.findById(req.body.employeeId)
         if(!employee) return res.status(400).send('Invalid Employee Id')
-
-        employee.available[req.body.leaveType] += getLeaveDuration(req.body.startDate, req.body.endDate);
-        employee.availed[req.body.leaveType] -= getLeaveDuration(req.body.startDate, req.body.endDate);
-
+        if(leave.halfDay) {
+            employee.available[req.body.leaveType] += 0.5;
+            employee.availed[req.body.leaveType] -= 0.5;    
+        } else {
+            employee.available[req.body.leaveType] += getLeaveDuration(req.body.startDate, req.body.endDate);
+            employee.availed[req.body.leaveType] -= getLeaveDuration(req.body.startDate, req.body.endDate);    
+        }
         await employee.save();
         leave.status = "rejected";
         await leave.save();
