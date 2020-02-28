@@ -172,12 +172,17 @@ function validateStatus(status) {
 router.get('/employee/:employeeId/:status', async (req, res) => {
     const { status, employeeId } = req.params
     console.log(status)
-    let employee = await Employee.findById(mongoose.Types.ObjectId(employeeId));
+    let employee
+    try {
+        employee = await Employee.findById(employeeId);
+    } catch(err) {
+        return res.status(400).send('Invalid Employee Id format')
+    }
     if(!employee) return res.status(400).send('Invalid Employee Id')
 
     const { error } = validateStatus(_.pick(req.params, ["status"]))
     if(error) return res.status(400).send('Invalid status entered')
-
+    let leaves
     if(error)
         leaves = await Leave.find({ employeeId: employeeId })
     else
@@ -188,7 +193,12 @@ router.get('/employee/:employeeId/:status', async (req, res) => {
 router.get('/approver/:employeeId/:status', async (req, res) => {
     const { status, employeeId } = req.params
     console.log(status)
-    let employee = await Employee.findById(mongoose.Types.ObjectId(employeeId));
+    let employee
+    try {
+        employee = await Employee.findById(employeeId);
+    } catch(err) {
+        return res.status(400).send('Invalid Employee Id format')
+    }
     if(!employee) return res.status(400).send('Invalid Employee Id')
 
     const { error } = validateStatus(_.pick(req.params, ["status"]))

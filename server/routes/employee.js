@@ -139,7 +139,12 @@ function sendValidationError(error, res) {
 
 router.get("/:id", async (req, res) => {
     const id = req.params.id;
-    let employee = await Employee.findById(mongoose.Types.ObjectId(id));
+    let employee;
+    try {
+        employee = await Employee.findById(id)
+    } catch(err) {
+        return res.status(400).send("Invalid Id format")
+    }
     if (!employee) return res.status(400).send("record not found");
     res
       .status(200)
@@ -168,11 +173,16 @@ router.get("/:id", async (req, res) => {
     let validationResult = validate(req.body);
     if(validationResult.error) return sendValidationError(validationResult.error, res); 
 
-    let employee = await Employee.findOne({ email: req.body.email });
+    let employee = await Employee.findOne({ email: req.body.email })
     if (employee && employee._id!=id) return res.status(400).send('Email Already in use')
 
     if(req.body.role !== "admin") {
-        let approver = await Employee.findById(mongoose.Types.ObjectId(req.body.approver))
+        let approver
+        try {
+            approver = await Employee.findById(req.body.approver)
+        } catch(err) {
+            return res.status(400).send('Invalid approver Id')
+        }
         if(!approver) return res.status(400).send('Entered approver doesn\'t exist')
     }
 
@@ -219,7 +229,12 @@ router.post('/', async (req, res) => {
     if(employee) return res.status(400).send('User Already Registered')
 
     if(req.body.role !== "admin") {
-        let approver = await Employee.findById(mongoose.Types.ObjectId(req.body.approver))
+        let approver
+        try {
+            approver = await Employee.findById(req.body.approver)
+        } catch(err) {
+            return res.status(400).send('Invalid Id format')
+        }
         if(!approver) return res.status(400).send('Entered approver doesn\'t exist')
     }
 
