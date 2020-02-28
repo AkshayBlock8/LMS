@@ -279,7 +279,7 @@ router.get('/approver/:employeeId/:status', async (req, res) => {
 })
 
 router.put('/', async (req, res) => {
-    let validationResult = validate(_.pick(req.body, ["employeeId", "approverId", "startDate", "endDate", "leaveType", "halfDay", "description"]));
+    let validationResult = validate(_.pick(req.body, ["employeeId", "approverId", "startDate", "endDate", "leaveType", "halfDay", "description", "firstName", "lastName"]));
     if(validationResult.error) return sendValidationError(validationResult.error, res);
 
     const leave = await Leave.findById(req.body._id);
