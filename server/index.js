@@ -6,7 +6,7 @@ const express = require('express');
 const app = express();
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require("swagger-jsdoc");
- 
+var cors = require('cors');
 
 // Swagger set up
 const options = {
@@ -30,13 +30,17 @@ const options = {
       servers: [
         {
           url: "http://localhost:5000/api"
-        }
+        },
+        {
+          url: "http://10.9.8.150:5000/api"
+        },
       ]
     },
     apis: ["./models/employee.js", "./models/leaveType.js", "./models/leave.js", "./routes/employee.js", "./routes/leave.js", "./routes/auth.js"]
 };
 const specs = swaggerJsdoc(options);
 
+app.use(cors());
 app.use(express.json());
 app.use("/api/docs", swaggerUi.serve);
 app.get(
