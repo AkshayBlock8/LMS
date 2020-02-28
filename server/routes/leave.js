@@ -5,6 +5,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose')
 const Joi = require("joi")
+const em = require('../utils/email')
 
 /**
  * @swagger
@@ -159,6 +160,14 @@ router.post('/', async (req, res) => {
     leaveSchema.status = "pending"
     leave = new Leave(leaveSchema);
     await leave.save();
+    let mailOptions ={
+        from: '"Admin LMS" lmsblock8@gmail.com', // sender address
+        to: approver.email, // list of receivers
+        subject: ""+leaveSchema.leaveType.charAt(0).toUpperCase()+leaveSchema.leaveType.slice(1)+" leave applied by "+employee.firstName, // Subject line
+        // text: "Hello world?", // plain text body
+        html: "<p><b>"+employee.firstName+"</b>"+" applied for a "+"<b>"+leaveSchema.leaveType+"</b>"+" leave from "+"<b>"+leaveSchema.startDate+"</b>"+" to "+"<b>"+leaveSchema.endDate+"</b>"+"<p><b>Reason:</b>"+leaveSchema.description // html body
+    };
+    em.email(mailOptions);
     res.send(leave);
 })
 
