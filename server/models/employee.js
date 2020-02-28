@@ -120,7 +120,7 @@ function validateEmployee(employee) {
     const schema = {
         firstName: Joi.string().min(3).max(50).required(),
         middleName: Joi.string().min(0).max(255).allow(""),
-        lastName: Joi.string().min(5).max(255).required(),
+        lastName: Joi.string().min(3).max(255).required(),
         email: Joi.string().min(5).max(255).email(),
         doj: Joi.string().min(5).max(255).required(),
         gender: Joi.string().valid("male", "female", "other"),

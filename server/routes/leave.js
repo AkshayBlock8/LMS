@@ -31,6 +31,8 @@ const em = require('../utils/email')
  *            example:
  *              employeeId: 5e5644860cf7b449936036ea
  *              approverId: 5e564317ef4e004870fc701f
+ *              firstName: Akshay
+ *              lastName: Kumar
  *              startDate: 2020-02-29
  *              endDate: 2020-03-05
  *              leaveType: sick
@@ -172,6 +174,13 @@ function invalidDays(startDate, endDate, halfDay) {
     return start.toString() !== end.toString()
 }
 
+function invalidEmployeeName(employee, names) {
+    console.log(employee.firstName, employee.lastName)
+    if(employee.firstName !== names.firstName || employee.lastName !== names.lastName)
+        return true;
+    return false;
+}
+
 router.post('/', async (req, res) => { 
     let validationResult = validate(req.body);
     if(validationResult.error) return sendValidationError(validationResult.error, res);
@@ -180,6 +189,8 @@ router.post('/', async (req, res) => {
     
     let employee = await Employee.findById(mongoose.Types.ObjectId(req.body.employeeId));
     if(!employee) return res.status(400).send('Invalid Employee Id')
+
+    if(invalidEmployeeName(employee, _.pick(req.body, ["firstName", "lastName"]))) return res.status(400).send('employee names do not match the emp id')
 
     let approver = await Employee.findById(mongoose.Types.ObjectId(req.body.approverId));
     if(!approver) return res.status(400).send('Invalid Approver Id')
@@ -197,7 +208,7 @@ router.post('/', async (req, res) => {
         employee.availed[req.body.leaveType] += leaveDuration    
     }
     await employee.save()
-    let leaveSchema = _.pick(req.body, ["employeeId", "approverId", "startDate", "endDate", "leaveType", "halfDay", "description", "status"])
+    let leaveSchema = _.pick(req.body, ["employeeId", "approverId", "firstName", "lastName", "startDate", "endDate", "leaveType", "halfDay", "description", "status"])
 
     leaveSchema.status = "pending"
     leave = new Leave(leaveSchema);
