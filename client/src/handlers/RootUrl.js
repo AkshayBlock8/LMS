@@ -1,3 +1,3 @@
-const RootURL='http://10.9.8.150:5000/api'
+const RootURL='https://mg8n2x0r67.execute-api.ap-south-1.amazonaws.com/dev/api'
 
 export default RootURL
