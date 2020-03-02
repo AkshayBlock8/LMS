@@ -88,6 +88,13 @@ const mongoose = require('mongoose')
  *                 example: record not found
  *
  *    put:
+ *      parameters:
+ *      - in: path
+ *        name: id
+ *        required: true
+ *        schema:
+ *          type: string
+ *        description: The _id of the document
  *      summary: Updates the employee record
  *      tags: [Employees]
  *      requestBody:
