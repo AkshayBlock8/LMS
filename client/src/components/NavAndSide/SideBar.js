@@ -1,17 +1,20 @@
-import React from "react";
+import React,{useContext}from "react";
 import "./side.css";
 import { useHistory , useLocation } from "react-router-dom";
+import {EmpIdContext} from '../../contexts/EmpId/EmpIdContext'
 
 function SideBar() {
 
-  //fake data
-  const role='admin'
+  
+  //getting location
   let location=useLocation()
-  console.log(location)
 
   //Using routing to link logout button and apply leave button
   const history = useHistory();
-  
+  //getting employee information
+  let [empid,]=useContext(EmpIdContext)
+  let role=empid.role
+  console.log('role',empid)
 
 
   const loadAnotherPage=(page)=>{
@@ -21,6 +24,9 @@ function SideBar() {
         break;
       case 'applyLeave':
         history.push("/addLeave");
+        break;
+      case 'leaveApproval':
+        history.push('/leaveApproval')
         break;
       default:
         history.push("/");
@@ -49,7 +55,7 @@ function SideBar() {
         ></img>
       </button>
 
-      <button type="button"  onClick={()=>{loadAnotherPage('applyLeave')}} key="4" id="approval">
+      <button type="button"  onClick={()=>{loadAnotherPage('leaveApproval')}} key="4" id="approval">
         Leave Approval{" "}
         <img
           src={require("../../icons/arrowb.png")}
@@ -59,7 +65,7 @@ function SideBar() {
       </button>
 
       {
-        role==='admin'?
+        role=='admin'?
         <button type="button" onClick={()=>{loadAnotherPage('applyLeave')}} key="5" >
         Leave management{" "}
         <img
@@ -73,8 +79,8 @@ function SideBar() {
       }
 
       {
-        role==='admin'?
-        <button type="button" onClick={()=>{loadAnotherPage('applyLeave')}} key="5" >
+        role=='admin'?
+        <button type="button" onClick={()=>{loadAnotherPage('applyLeave')}} key="6" >
         Employee{" "}
         <img
           src={require("../../icons/arrowb.png")}
