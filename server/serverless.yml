@@ -1,0 +1,19 @@
+service: lms-app
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: ap-south-1
+  environment: 
+    NODE_ENV: dev
+    DB: "mongodb+srv://lmssuperadmin:block8lms@lms-ily54.mongodb.net/test?retryWrites=true&w=majority"
+
+functions:
+  employ_app:
+    handler: index.handler
+    events:
+      - http: ANY /
+      - http: 'ANY {proxy+}'
+plugins:
+  - serverless-offline
