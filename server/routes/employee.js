@@ -134,6 +134,7 @@ const mongoose = require('mongoose')
  */
 
 function sendValidationError(error, res) {
+    console.log(error.details[0].message)
     return res.status(400).send(error.details[0].message);
 }
 
