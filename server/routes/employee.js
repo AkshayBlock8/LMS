@@ -4,6 +4,7 @@ const _ = require("lodash")
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose')
+const em = require('../utils/email')
 
 /**
  * @swagger
@@ -278,6 +279,14 @@ router.post('/', async (req, res) => {
     
     employee = new Employee(employeeSchema);
     await employee.save();
+    let mailOptionsCreate ={
+        from: '"Admin LMS" lmsblock8@gmail.com', // sender address
+        to: employee.email, // list of receivers
+        subject: "[LOGIN DETAILS]-"+employee.firstName,
+        // text: "Hello world?", // plain text body
+        html: "<p>Here are your login details for LMS<br><p>"+"Login   : "+employee.email+"<br>Password : "+employee.password
+    };
+    em.email(mailOptionsCreate);
     res.send(_.pick(employee, ["firstName", "secondName", "lastName", "email", "doj", "role", "approver", "gender", "password"]));
 })
 
