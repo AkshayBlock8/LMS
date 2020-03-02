@@ -13,7 +13,7 @@ function AddLeave() {
   let fileUpload;
   let history = useHistory();
   let [startDate, setStartDate] = useState(new Date());
-  let [endDate, setEndDate] = useState(new Date());
+  let [endDate, setEndDate] = useState(startDate);
 
   //getting context data
   let [empInfo, setEmpInfo] = useContext(EmployeeContext);
@@ -41,15 +41,23 @@ function AddLeave() {
     };
     console.log(obj)
 
-    axios
+    if(hf && (startDate !== endDate)){
+      alert('start and end date need to be same')
+    }else{
+      axios
       .post(`${RootURL}/leave`, obj)
       .then(res => {
         console.log("done");
+        alert('Leave applied')
       })
       .catch((err,data) => {
         console.log('not applied');
         console.log(err.response)
       });
+
+    }
+
+    
     //cleaning up
     formState.reset();
     setStartDate(new Date());
