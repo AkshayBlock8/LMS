@@ -13,7 +13,7 @@ function LeaveTable(props) {
   
   const getRows = () => {
     return history.map(entry => {
-      entry.nodays=getLeaveDuration(entry.startDate,entry.endDate)
+      entry.nodays=getLeaveDuration(entry.startDate,entry.endDate,entry.halfDay)
       return <LeaveEntry  key={entry.id} entry={entry}></LeaveEntry>;
     });
   };

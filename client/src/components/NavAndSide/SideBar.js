@@ -54,7 +54,7 @@ function SideBar() {
         ></img>
       </button>
 
-      <button type="button"  onClick={()=>{loadAnotherPage('leaveApproval')}} key="4" id="approval">
+      <button type="button"  onClick={()=>{loadAnotherPage('leaveApproval')}} key="4" className={location.pathname==='/leaveApproval'?'selected':''}>
         Leave Approval{" "}
         <img
           src={require("../../icons/arrowb.png")}

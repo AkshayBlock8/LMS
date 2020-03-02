@@ -15,7 +15,6 @@ function Login(props) {
 
     const handleSubmit = event => {
     event.preventDefault();
-    console.log('making request at:',`${RootURL}/auth`)
     let emailV=formState.values.email
     let passw=formState.values.passw
     axios
@@ -52,7 +51,7 @@ function Login(props) {
         </div>
 
         <div className="groupfield">
-          <input {...password("passw")} placeholder="****"/>
+          <input {...password("passw")} placeholder="Password"/>
         </div>
 
         <div id="buttonA">

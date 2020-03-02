@@ -1,9 +1,15 @@
 import React,{useContext}from "react";
 import {EmpIdContext} from '../../contexts/EmpId/EmpIdContext'
+import {useHistory} from 'react-router-dom'
 import "./nav.css";
 
 function Nav(props) {
   let [empid,setEmpid]=useContext(EmpIdContext)
+  let history=useHistory()
+  const logout=()=>{
+    setEmpid(null)
+    history.push('/')
+  }
   return (
     <div id="nav">
       
@@ -25,6 +31,7 @@ function Nav(props) {
           src={require("../../icons/userb.png")}
           id="user_img"
           alt="User"
+          onClick={logout}
         ></img>
         
       </div>

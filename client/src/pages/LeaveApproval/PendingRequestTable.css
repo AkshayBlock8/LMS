@@ -3,7 +3,7 @@
     box-shadow: 3px 3px 6px black;
     border-radius: 5px;
     display: block;
-    width:60vw;
+    width:78vw;
     
     height: 32vh;
     overflow-y: scroll;
@@ -43,15 +43,20 @@ td , th{
     padding:0.8rem;
     border-radius:5px;
     font-weight: bold;
+    box-shadow: 2px 2px 4px black;
     transition: background 500ms;
+    transition: box-shadow 500ms;
 }
 #reject{
     background: rgb(233, 3, 3);
+    
 }
 
 #accept:hover{
     background: rgb(21, 145, 21);
+    box-shadow: 4px 4px 6px black;
 }
 #reject:hover{
     background: rgb(185, 3, 3);
+    box-shadow: 4px 4px 6px black;
 }

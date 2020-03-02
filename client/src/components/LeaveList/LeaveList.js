@@ -37,7 +37,7 @@ function LeaveList(props) {
             <th>Sick</th>
             <td>{empInfo.total.sick}</td>
             <td>{empInfo.availed.sick}</td>
-            <td>{empInfo.available.sick}</td>
+            <td className="available">{empInfo.available.sick}</td>
           </tr>
         </tbody>
         <tbody>
@@ -45,7 +45,7 @@ function LeaveList(props) {
             <th>Casual</th>
             <td>{empInfo.total.casual}</td>
             <td>{empInfo.availed.casual}</td>
-            <td>{empInfo.available.casual}</td>
+            <td className="available">{empInfo.available.casual}</td>
           </tr>
         </tbody>
         <tbody>
@@ -53,7 +53,7 @@ function LeaveList(props) {
             <th>Paid</th>
             <td>{empInfo.total.paid}</td>
             <td>{empInfo.availed.paid}</td>
-            <td>{empInfo.available.paid}</td>
+            <td className="available">{empInfo.available.paid}</td>
           </tr>
         </tbody>
 

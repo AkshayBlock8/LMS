@@ -11,6 +11,7 @@ function ApprovalHistory() {
     return ahistory.map(entry => {
         console.log('checking enrty',entry)
         if(entry.status!=='pending'){
+          
           return (<ApprovalHistoryEntry id={entry._id} entry={entry}></ApprovalHistoryEntry>)
         }else{
           return

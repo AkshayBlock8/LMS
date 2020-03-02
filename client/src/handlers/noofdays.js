@@ -1,4 +1,4 @@
-const getLeaveDuration=(start, end)=>{
+const getLeaveDuration=(start, end,status)=>{
     let startDate = new Date(start)
     let endDate = new Date(end)
     let count = 0;
@@ -9,6 +9,7 @@ const getLeaveDuration=(start, end)=>{
         }
         count++;
     }
+    count=status===true?(count-0.5):count
     return count;
 }
 

@@ -26,6 +26,10 @@ div#notep{
 
 #user_img{
     width:1.7vw;
+    position: relative;
+    top:8%;
+    margin-left:5px;
+    cursor: pointer;
 }
 
 #note_img{

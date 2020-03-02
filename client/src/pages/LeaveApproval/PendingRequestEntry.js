@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
+import getLeaveDuration from '../../handlers/noofdays'
 import { useFormState } from "react-use-form-state";
 import getStringDate from "../../handlers/StringData";
 
@@ -27,11 +28,12 @@ function PendingRequestEntry(props) {
     <>
       <tbody>
         <tr>
-          <td>{props.entry.leaveType}</td>
+          <td>{props.entry.leaveType[0].toUpperCase() +  
+            props.entry.leaveType.slice(1)}</td>
           <td>{props.entry.firstName}</td>
           <td>{getStringDate(props.entry.startDate)}</td>
           <td>{getStringDate(props.entry.endDate)}</td>
-          <td>{props.entry.days}</td>
+          <td>{getLeaveDuration(props.entry.startDate,props.entry.endDate,props.entry.halfDay)}</td>
           <td>
             <button
               type="button"

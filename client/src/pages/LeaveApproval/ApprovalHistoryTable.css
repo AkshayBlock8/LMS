@@ -41,3 +41,10 @@ td , th{
     cursor: pointer;
 }
 
+span#astatus{
+    color:white;
+    padding:0.5rem;
+    border-radius:5px;
+   
+}
+

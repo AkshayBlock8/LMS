@@ -27,7 +27,7 @@ function AddLeave() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    let hf = formState.values.hf;
+    let hf = formState.values.hf==='Half'?true:false;
     let obj = {
       firstName:empInfo.firstName,
       lastName:empInfo.lastName,
@@ -36,7 +36,7 @@ function AddLeave() {
       startDate: startDate.toISOString(),
       endDate: endDate.toISOString(),
       leaveType: formState.values.leaveType.toLowerCase(),
-      halfDay:false,
+      halfDay:hf,
       description:formState.values.description
     };
     console.log(obj)
@@ -60,7 +60,7 @@ function AddLeave() {
     <div id="addLeave">
       <form onSubmit={handleSubmit}>
         <div className="field-group date-cont">
-          <label>Leave dates</label>
+          <label>Leave Dates<sup className="imp"> *</sup></label>
           <DatePicker
             className="datep"
             onChange={date => {
@@ -77,22 +77,23 @@ function AddLeave() {
             format="dd.MM.yy"
             minDate={startDate}
           />
-          <select {...select("hf")}>
+          <select id="hf" {...select("hf")}>
             <option value="Half">Half Day</option>
-            <option value="Full">Full Full</option>
+            <option value="Full">Full Day</option>
           </select>
         </div>
 
         <div className="field-group">
-          <label>Leave Type </label>
+          <label>Leave Type<sup className="imp">*</sup></label>
           <select {...select("leaveType")}>
-            <option value="casual">casual</option>
-            <option value="sick">sick</option>
+            <option value="casual">Casual</option>
+            <option value="sick">Sick</option>
+            <option value="paid">Paid</option>
           </select>
         </div>
 
         <div className="field-group">
-          <label>Leave Description</label>
+          <label>Leave Description<sup className="imp"> *</sup></label>
           <textarea {...text("description")} required minLength="3"></textarea>
         </div>
 
@@ -103,9 +104,14 @@ function AddLeave() {
             <br />
             applying for more than 2 days sick leave
           </span>
+          <label for="files" id="attachFiles">
+            Attach Document
+          </label>
           <input
             type="file"
+            id="files"
             label="Upload"
+            text="Attach document"
             className="fileU"
             ref={ref => (fileUpload = ref)}
           />
