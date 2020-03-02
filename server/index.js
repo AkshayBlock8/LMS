@@ -34,6 +34,9 @@ const options = {
         {
           url: "http://10.9.8.150:5000/api"
         },
+        {
+          url: "https://mg8n2x0r67.execute-api.ap-south-1.amazonaws.com/dev/api"
+        },
       ]
     },
     apis: ["./models/employee.js", "./models/leaveType.js", "./models/leave.js", "./routes/employee.js", "./routes/leave.js", "./routes/auth.js"]
