@@ -214,19 +214,23 @@ router.post('/', async (req, res) => {
     leaveSchema.status = "pending"
     leave = new Leave(leaveSchema);
     await leave.save();
+    var d1 =new Date(req.body.startDate);
+    var myStartDate = d1.getDate() + "/" + (d1.getMonth() + 1) + "/" + d1.getFullYear()
+    var d2 =new Date(req.body.endDate);
+    var myEndDate = d2.getDate() + "/" + (d2.getMonth() + 1) + "/" + d2.getFullYear()
     let mailOptions ={
         from: '"Admin LMS" lmsblock8@gmail.com', // sender address
         to: approver.email, // list of receivers
         subject: ""+leaveSchema.leaveType.charAt(0).toUpperCase()+leaveSchema.leaveType.slice(1)+" leave applied by "+employee.firstName, // Subject line
         // text: "Hello world?", // plain text body
-        html: "<p><b>"+employee.firstName+"</b>"+" applied for a "+"<b>"+leaveSchema.leaveType+"</b>"+" leave from "+"<b>"+leaveSchema.startDate+"</b>"+" to "+"<b>"+leaveSchema.endDate+"</b>"+"<p><b>Reason:</b>"+leaveSchema.description // html body
+        html: "<p><b>"+employee.firstName+"</b>"+" applied for a "+"<b>"+leaveSchema.leaveType+"</b>"+" leave from "+"<b>"+myStartDate+"</b>"+" to "+"<b>"+myEndDate+"</b>"+"<p><b>Reason:</b>"+leaveSchema.description // html body
     };
     let mailOptionsEmp ={
         from: '"Admin LMS" lmsblock8@gmail.com', // sender address
         to: employee.email, // list of receivers
         subject: ""+leaveSchema.leaveType.charAt(0).toUpperCase()+leaveSchema.leaveType.slice(1)+" leave successfully applied by "+employee.firstName, // Subject line
         // text: "Hello world?", // plain text body
-        html: "<p><b>You</b>"+" applied for a "+"<b>"+leaveSchema.leaveType+"</b>"+" leave from "+"<b>"+leaveSchema.startDate+"</b>"+" to "+"<b>"+leaveSchema.endDate+"</b>"+"<p><b>Reason:</b>"+leaveSchema.description // html body
+        html: "<p><b>You</b>"+" applied for a "+"<b>"+leaveSchema.leaveType+"</b>"+" leave from "+"<b>"+myStartDate+"</b>"+" to "+"<b>"+myEndDate+"</b>"+"<p><b>Reason:</b>"+leaveSchema.description // html body
     };
     em.email(mailOptions);
     em.email(mailOptionsEmp);
@@ -285,6 +289,10 @@ router.put('/', async (req, res) => {
 
     const leave = await Leave.findById(req.body._id);
     if(!leave) return res.status(400).send('Invalid Leave Id provided')
+    var d1 =new Date(req.body.startDate);
+    var myStartDate = d1.getDate() + "/" + (d1.getMonth() + 1) + "/" + d1.getFullYear()
+    var d2 =new Date(req.body.endDate);
+    var myEndDate = d2.getDate() + "/" + (d2.getMonth() + 1) + "/" + d2.getFullYear()
     if(req.body.status === "rejected" && leave.status === "pending") {
         const employee = await Employee.findById(req.body.employeeId)
         if(!employee) return res.status(400).send('Invalid Employee Id')
@@ -303,7 +311,7 @@ router.put('/', async (req, res) => {
             to: employee.email, // list of receivers
             subject: "[REJECTED]-"+leave.leaveType.charAt(0).toUpperCase()+leave.leaveType.slice(1)+" leave applied by "+employee.firstName, // Subject line
             // text: "Hello world?", // plain text body
-            html: "<p>The "+leave.leaveType+"</b>"+" leave that you applied from "+"<b>"+leave.startDate+"</b>"+" to "+"<b>"+leave.endDate+"</b> has been rejected." // html body
+            html: "<p>The "+leave.leaveType+"</b>"+" leave that you applied from "+"<b>"+myStartDate+"</b>"+" to "+"<b>"+myEndDate+"</b> has been rejected." // html body
         };
         em.email(mailOptionsRejected);
         return res.send(leave)
@@ -318,7 +326,7 @@ router.put('/', async (req, res) => {
             to: employee.email, // list of receivers
             subject: "[APPROVED]-"+leave.leaveType.charAt(0).toUpperCase()+leave.leaveType.slice(1)+" leave applied by "+employee.firstName, // Subject line
             // text: "Hello world?", // plain text body
-            html: "<p>The "+leave.leaveType+"</b>"+" leave that you applied from "+"<b>"+leave.startDate+"</b>"+" to "+"<b>"+leave.endDate+"</b> has been approved." // html body
+            html: "<p>The "+leave.leaveType+"</b>"+" leave that you applied from "+"<b>"+myStartDate+"</b>"+" to "+"<b>"+myEndDate+"</b> has been approved." // html body
         };
         em.email(mailOptionsApproved);
         return res.send(leave)
