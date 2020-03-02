@@ -1,7 +1,7 @@
 import React,{useContext}from "react";
 import PendingRequestEntry from './PendingRequestEntry'
 import axios from 'axios'
-
+import RootURL from '../../handlers/RootUrl'
 //getting context
 import {ApprovalHistoryContext} from '../../contexts/AprrovalHistory/ApprovalHistoryContext'
 import "./PendingRequestTable.css";
@@ -13,7 +13,7 @@ function PendingRequests(props) {
       const onStatusChange=(newentry,_id,status)=>{
         newentry.status=status
         console.log('new entry:',newentry)
-        axios.put('http://10.9.8.150:5000/api/leave',newentry).then((res)=>{
+        axios.put(`${RootURL}/leave`,newentry).then((res)=>{
           let newahistory=ahistory.map((entry)=>{
             entry.status=entry._id===_id?status:entry.status
             return entry
@@ -23,8 +23,6 @@ function PendingRequests(props) {
         }).catch((err)=>{
           console.log(err.response())
         })
-
-        
       }
 
      

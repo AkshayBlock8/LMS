@@ -89,3 +89,8 @@ span{
 #logo_img{
     width:7vw;
 }
+
+#footer{
+    position: absolute;
+    bottom:0;
+}

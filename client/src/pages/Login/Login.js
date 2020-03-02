@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
+import Footer from '../../components/Footer/Footer'
 import { useFormState } from "react-use-form-state";
 import { EmpIdContext } from "../../contexts/EmpId/EmpIdContext";
+import RootURL from '../../handlers/RootUrl'
 import axios from 'axios'
 import "./login.css";
 
@@ -13,10 +15,11 @@ function Login(props) {
 
     const handleSubmit = event => {
     event.preventDefault();
+    console.log('making request at:',`${RootURL}/auth`)
     let emailV=formState.values.email
     let passw=formState.values.passw
     axios
-      .post("http://10.9.8.150:5000/api/auth", {
+      .post(`${RootURL}/auth`, {
         email:emailV,
         password: passw
         
@@ -32,6 +35,7 @@ function Login(props) {
   };
 
   return (
+    <>
     <div id="loginBoard">
       <div id="header">
         <img
@@ -48,19 +52,21 @@ function Login(props) {
         </div>
 
         <div className="groupfield">
-          <input {...password("passw")} />
+          <input {...password("passw")} placeholder="****"/>
         </div>
 
         <div id="buttonA">
           <input id="check" type="checkbox" name="check1" />{" "}
           <span>Remember me</span> <br />
-          <a href="/">Forgot Password</a>
+          <a href="/">Forgot Password?</a>
           <br />
           <br />
           <button type="submit">Log in</button>
         </div>
       </form>
     </div>
+    <Footer/>
+    </>
   );
 }
 

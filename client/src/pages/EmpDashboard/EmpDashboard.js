@@ -8,9 +8,10 @@ import {EmployeeContext} from '../../contexts/Emp/EmployeeContext'
 import {HistoryContext} from '../../contexts/History/HistoryContext'
 //import axios
 import axios from 'axios'
+import RootURL from '../../handlers/RootUrl'
 //importing css files
 import "./empdashboard.css";
-import Axios from "axios";
+
 
 function EmpDashboard() {
 
@@ -19,10 +20,8 @@ function EmpDashboard() {
   let [history,setHistory]=useContext(HistoryContext)
   
   const getEmpInfo=()=>{
-    // console.log('fetching employee info')
-    axios.get(`http://10.9.8.150:5000/api/employee/${empid._id}`)
+    axios.get(`${RootURL}/employee/${empid._id}`)
     .then((res)=>{
-     
       setEmpInfo(res.data)
     })
     .catch((err)=>{
@@ -31,8 +30,7 @@ function EmpDashboard() {
   }
 
   const getHistory=()=>{
-    // console.log('fetching history')
-    axios.get(`http://10.9.8.150:5000/api/leave/employee/${empid._id}/111`)
+    axios.get(`${RootURL}/leave/employee/${empid._id}/111`)
     .then((res)=>{
       setHistory(res.data)
     })
@@ -42,7 +40,7 @@ function EmpDashboard() {
   }
 
   useEffect(()=>{
-    // console.log('mounting')
+    console.log('mounting................')
     getEmpInfo()
     getHistory()
   },[])

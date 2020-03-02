@@ -4,7 +4,7 @@
 
 .App{
   display: grid;
-  grid-template-rows: 10vh 90vh;
+  grid-template-rows: 10vh 86vh 4vh;
 }
 
 #main{

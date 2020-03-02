@@ -14,7 +14,6 @@ function SideBar() {
   //getting employee information
   let [empid,]=useContext(EmpIdContext)
   let role=empid.role
-  console.log('role',empid)
 
 
   const loadAnotherPage=(page)=>{

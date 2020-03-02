@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import DatePicker from "react-date-picker";
 import { useFormState } from "react-use-form-state";
 import { useHistory } from "react-router-dom";
+import RootURL from '../../handlers/RootUrl'
 import axios from "axios";
 import { EmployeeContext } from "../../contexts/Emp/EmployeeContext";
 import { EmpIdContext } from "../../contexts/EmpId/EmpIdContext";
@@ -24,68 +25,34 @@ function AddLeave() {
     hf: "Half"
   });
 
-  const getStringVal = date => {
-    var months = [
-      "01",
-      "02",
-      "03",
-      "04",
-      "05",
-      "06",
-      "07",
-      "08",
-      "09",
-      "10",
-      "11",
-      "12"
-    ];
-    let stringVal =
-      date.getFullYear().toString() +
-      "-" +
-      months[date.getMonth()] +
-      "-" +
-      date.getDate().toString();
-    return stringVal;
-  };
-
   const handleSubmit = e => {
     e.preventDefault();
-
-    let startDateS = getStringVal(startDate);
-    let endDateS = getStringVal(endDate);
     let hf = formState.values.hf;
-    let leaveType = formState.values.leaveType;
-    let ss = startDate.getTime() / 1000;
-    let es = endDate.getTime() / 1000;
-
-    let desc = formState.values.description;
-
     let obj = {
+      firstName:empInfo.firstName,
+      lastName:empInfo.lastName,
       employeeId: empid._id,
       approverId: empInfo.approver,
-      startDate: startDateS,
-      endDate: endDateS,
-      leaveType: leaveType.toLowerCase(),
+      startDate: startDate.toISOString(),
+      endDate: endDate.toISOString(),
+      leaveType: formState.values.leaveType.toLowerCase(),
       halfDay:false,
-      description: desc
+      description:formState.values.description
     };
+    console.log(obj)
 
     axios
-      .post("http://10.9.8.150:5000/api/leave", obj)
+      .post(`${RootURL}/leave`, obj)
       .then(res => {
         console.log("done");
-        
       })
       .catch((err,data) => {
         console.log('not applied');
         console.log(err.response)
       });
-    console.log("object,", obj);
-
     //cleaning up
     formState.reset();
     setStartDate(new Date());
-    // history.push("/");
     e.target.reset();
   };
 
@@ -111,13 +78,13 @@ function AddLeave() {
             minDate={startDate}
           />
           <select {...select("hf")}>
-            <option value="Half">Half</option>
-            <option value="Full">Full</option>
+            <option value="Half">Half Day</option>
+            <option value="Full">Full Full</option>
           </select>
         </div>
 
         <div className="field-group">
-          <label>Leave Type:</label>
+          <label>Leave Type </label>
           <select {...select("leaveType")}>
             <option value="casual">casual</option>
             <option value="sick">sick</option>
