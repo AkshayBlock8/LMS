@@ -12,7 +12,11 @@
 }
 
 #leavelist td{
-    font-weight: bolder;
-    color:#05b7e8;
     text-align: center;
 }
+
+#leavelist td.available{
+    color:#05b7e8;
+    font-weight: bolder;
+}
+

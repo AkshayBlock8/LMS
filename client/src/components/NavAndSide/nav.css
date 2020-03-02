@@ -4,7 +4,7 @@ div#nav{
     box-sizing: border-box;
     box-shadow: 2px 2px 4px black;
     display:grid;
-    grid-template-columns: 20vw 70vw 10vw;
+    grid-template-columns: 20vw 65vw 15vw;
 }
 
 div#log , div#ham , div#notep{
@@ -26,6 +26,10 @@ div#notep{
 
 #user_img{
     width:1.7vw;
+    position: relative;
+    top:8%;
+    margin-left:5px;
+    cursor: pointer;
 }
 
 #note_img{

@@ -1,0 +1,110 @@
+#addLeave{
+    box-sizing: border-box;
+    padding:1rem;
+
+}
+
+#addLeave form{
+    width:100%;
+    height:100%;
+    display:grid;
+    grid-template-rows: 1fr 0.8fr 1fr 1fr;
+    
+}
+
+
+div.field-group{
+    padding:1rem;
+    border-radius: 5px;
+}
+
+div.field-group label{
+    display: inline-block;
+    width:15vw;
+    font-size: 1.2rem;
+}
+div.date-cont div{
+    padding:0.6rem;
+}
+
+
+.submit button{
+  box-sizing: border-box;
+  padding: 0.7rem;
+  width: 12vw;
+  font-size: 1rem;
+  border-radius: 3px;
+  border: none;
+  box-shadow: 2px 2px 4px black;
+  background: #05b7e8;
+  color: white;
+  transition: box-shadow 500ms;
+  cursor: pointer;
+  margin:10px;
+}
+
+.submit button:hover {
+    box-shadow: 4px 4px 8px black;
+  }
+
+#addLeave select,textarea{
+    padding:0.6rem;
+    border-radius:5px;
+    font-size:1.2rem;
+    cursor: pointer;
+}
+
+select{
+    width:15vw;
+}
+select#hf{
+    width:11vw;
+}
+
+.date-cont select{
+    width:7vw;
+}
+
+textarea{
+    width:37vw;
+}
+
+span#warning{
+    display: inline-block;
+    width:25vw;
+    box-sizing: border-box;
+    font-size:0.8rem;
+    color:red;
+    /* border:1px solid black; */
+}
+sup.imp{
+    font-weight: bolder;
+    color:rgb(230, 3, 3);
+}
+#files{
+    visibility: hidden;
+    
+}
+
+#attachFiles{
+    
+    max-width: fit-content;
+    border-radius:5px;
+    padding: 7.5px;
+    color: white;
+    background-color: #05B7E8;
+    box-sizing: border-box;
+    width: 12vw;
+    font-size: 0.7rem;
+    border-radius: 3px;
+    border: none;
+    box-shadow: 2px 2px 4px black;
+    background: #05b7e8;
+    color: white;
+    margin: 10px;
+    cursor: pointer;
+}
+
+
+
+

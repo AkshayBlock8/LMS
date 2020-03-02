@@ -1,8 +1,8 @@
 div#sidebar{
     height:90vh;
-    /* width:17vw; */
+
     box-sizing: border-box;
-    /* box-shadow: 2px 2px 4px black; */
+   
 }
 
 #sidebar button{
@@ -24,10 +24,7 @@ div#sidebar{
     
 }
 
-button#dashb{
-    background: #05b7e8;
-    color:white;
-}
+
 #sidebar button img{
     width:1vw;
 }

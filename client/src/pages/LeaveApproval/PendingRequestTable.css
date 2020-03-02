@@ -1,0 +1,62 @@
+#tablePending table{
+  
+    box-shadow: 3px 3px 6px black;
+    border-radius: 5px;
+    display: block;
+    width:78vw;
+    
+    height: 32vh;
+    overflow-y: scroll;
+    margin-left: 1rem;
+    margin-top: .5rem;
+}
+
+td , th{
+    box-sizing: border-box;
+    width:15vw;
+    height: 7vh;
+    padding:1rem;
+    margin:0;
+    text-align: center;
+    font-size:0.9rem;
+}
+#pendingHeading{
+    margin-left: 1rem;
+    border:2px solid black;
+    width: fit-content;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    padding-bottom: 0.2rem;
+    padding-top: 0.2rem;
+    margin-top: 1.5rem;
+    font-size: 14px;
+}
+
+#thr{
+    background: #d4d3d3;
+}
+
+#accept,#reject{
+    border:none;
+    background: rgb(27, 185, 27);
+    color:white;
+    padding:0.8rem;
+    border-radius:5px;
+    font-weight: bold;
+    box-shadow: 2px 2px 4px black;
+    transition: background 500ms;
+    transition: box-shadow 500ms;
+}
+#reject{
+    background: rgb(233, 3, 3);
+    
+}
+
+#accept:hover{
+    background: rgb(21, 145, 21);
+    box-shadow: 4px 4px 6px black;
+}
+#reject:hover{
+    background: rgb(185, 3, 3);
+    box-shadow: 4px 4px 6px black;
+}
