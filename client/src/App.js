@@ -18,6 +18,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { EmpIdContext } from "./contexts/EmpId/EmpIdContext";
 
 import LeaveApproval from "./pages/LeaveApproval/LeaveApproval"
+
+import AddEmployee from "./pages/EmployeeManager/AddEmployee/AddEmployee"
 function App(props) {
   let [empid, setEmpid] = useContext(EmpIdContext);
 
@@ -42,7 +44,9 @@ function App(props) {
               <Route exact path="/leaveApproval">
                 <LeaveApproval></LeaveApproval>
               </Route>
-              
+              <Route exact path="/addEmployee">
+                <AddEmployee></AddEmployee>
+              </Route>
             </Switch>
           </div>
 

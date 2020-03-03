@@ -60,3 +60,26 @@ td , th{
     background: rgb(185, 3, 3);
     box-shadow: 4px 4px 6px black;
 }
+
+input#resi{
+    box-shadow: 4px 4px 6px black;
+    border:none;
+    padding:1rem;
+    width:80%;
+
+}
+
+button#resb{
+    border:none;
+    background:#05b7e8;
+    color:white;
+    padding:1rem;
+    border-radius:5px;
+    font-weight: bold;
+    box-shadow: 2px 2px 4px black;
+    transition: box-shadow 500ms;
+}
+
+button#resb:hover{
+    box-shadow: 4px 4px 6px black;
+}

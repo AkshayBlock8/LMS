@@ -48,14 +48,15 @@ function AddLeave() {
       .post(`${RootURL}/leave`, obj)
       .then(res => {
         console.log("done");
-        alert('Leave applied')
+        alert('Leave applied successfully')
       })
       .catch((err,data) => {
         console.log('not applied');
         console.log(err.response)
       });
-
     }
+
+    
 
     
     //cleaning up
@@ -113,7 +114,8 @@ function AddLeave() {
             applying for more than 2 days sick leave
           </span>
           <label for="files" id="attachFiles">
-            Attach Document
+             Attach Document<br/>
+            <span className="upcoming"><sup>*</sup>upcoming feature</span>
           </label>
           <input
             type="file"
@@ -127,7 +129,7 @@ function AddLeave() {
 
         <div className="field-group submit" style={{ textAlign: "center" }}>
           <button type="submit">ApplyLeave</button>
-          <button type="submit">Cancel</button>
+          <button type="button">Cancel</button>
         </div>
       </form>
     </div>

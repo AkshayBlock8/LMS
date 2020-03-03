@@ -41,3 +41,8 @@ div#sidebar{
     background:#05b7e8;
     color:white;
 }
+
+.upcoming{
+    color:rgb(209, 8, 8);
+    font-size: 0.8rem;
+}

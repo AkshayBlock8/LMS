@@ -27,6 +27,9 @@ function SideBar() {
       case 'leaveApproval':
         history.push('/leaveApproval')
         break;
+        case 'addEmployee':
+          history.push('/addEmployee')
+          break;
       default:
         history.push("/");
         break;
@@ -65,32 +68,36 @@ function SideBar() {
 
       {
         role=='admin'?
+        <button type="button" onClick={()=>{loadAnotherPage('addEmployee')}} key="6" >
+        Add/Edit Employee{" "}
+        <img
+          src={require("../../icons/arrowb.png")}
+          id="user_img"
+          alt="User"
+        ></img><br/>
+        <span className="upcoming"><sup>*</sup>upcoming feature</span>
+        </button>
+        :''
+
+      }
+
+
+      {
+        role=='admin'?
         <button type="button" onClick={()=>{loadAnotherPage('applyLeave')}} key="5" >
         Leave management{" "}
         <img
           src={require("../../icons/arrowb.png")}
           id="user_img"
           alt="User"
-        ></img>
+        ></img><br/>
+        <span className="upcoming"><sup>*</sup>upcoming feature</span>
         </button>
         :''
 
       }
 
-      {
-        role=='admin'?
-        <button type="button" onClick={()=>{loadAnotherPage('applyLeave')}} key="6" >
-        Employee{" "}
-        <img
-          src={require("../../icons/arrowb.png")}
-          id="user_img"
-          alt="User"
-        ></img>
-        </button>
-        :''
-
-      }
-
+      
     </div>
   );
 }

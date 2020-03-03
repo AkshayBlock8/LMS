@@ -1,0 +1,84 @@
+#addempform{
+    box-sizing: border-box;
+    padding:1rem;
+}
+
+#addempform .field-group{
+    
+    box-sizing: border-box;
+    padding:1rem;
+    /* border:1px solid black; */
+    
+}
+
+#addempform{
+    display:grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    padding:0.3rem;
+}
+
+#addempform input,#addempform select{
+    border:none;
+    padding:0.6rem;
+    box-shadow: 2px 2px 4px black;
+    font-size:0.9rem;
+    width: 15vw;
+    border-radius:5px;
+}
+
+#addempform label#addempform input,#addempform select{
+    display: inline-block;
+}
+
+#addempform #name-group{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+#addempform .group{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    
+}
+
+#addempform #role-group{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+#addempform .field-group label{
+    /* border:1px solid red; */
+    width:7vw;
+    font-size: 0.9rem;
+    font-weight: bolder;
+}
+
+#addempform #button-group{
+    padding:1rem;
+    text-align: center;
+}
+
+#addempform #button-group button{
+    box-sizing: border-box;
+  padding: 0.7rem;
+  width: 12vw;
+  font-size: 1rem;
+  border-radius: 3px;
+  border: none;
+  box-shadow: 2px 2px 4px black;
+  background: #05b7e8;
+  color: white;
+  transition: box-shadow 500ms;
+  cursor: pointer;
+  margin:10px;
+}
+
+#addempform #button-group button:hover{
+    box-shadow: 4px 4px 8px black;
+}
+
+#addempform .date-group input,#addempform .date-group select{
+    box-shadow: 0px 0px 0px black;
+    padding:3px;
+}
+
