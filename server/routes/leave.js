@@ -228,14 +228,14 @@ router.post('/', async (req, res) => {
         to: approver.email, // list of receivers
         subject: ""+leaveSchema.leaveType.charAt(0).toUpperCase()+leaveSchema.leaveType.slice(1)+" leave applied by "+employee.firstName, // Subject line
         // text: "Hello world?", // plain text body
-        html: "<p><b>"+employee.firstName+"</b>"+" applied for a "+myLeaveType+" "+"<b>"+leaveSchema.leaveType+"</b>"+" leave from "+"<b>"+myStartDate+"</b>"+" to "+"<b>"+myEndDate+"</b>"+"<p><b>Reason:</b>"+leaveSchema.description // html body
+        html: "<p><b>"+employee.firstName+"</b>"+" applied for "+myLeaveType+" "+"<b>"+leaveSchema.leaveType+"</b>"+" leave from "+"<b>"+myStartDate+"</b>"+" to "+"<b>"+myEndDate+"</b>"+"<p><b>Reason:</b>"+leaveSchema.description+"<p><b>No of days</b> : "+leaveDuration // html body
     };
     let mailOptionsEmp ={
         from: '"Admin LMS" lmsblock8@gmail.com', // sender address
         to: employee.email, // list of receivers
         subject: ""+leaveSchema.leaveType.charAt(0).toUpperCase()+leaveSchema.leaveType.slice(1)+" leave successfully applied by "+employee.firstName, // Subject line
         // text: "Hello world?", // plain text body
-        html: "<p><b>You</b>"+" applied for a "+myLeaveType+" "+"<b>"+leaveSchema.leaveType+"</b>"+" leave from "+"<b>"+myStartDate+"</b>"+" to "+"<b>"+myEndDate+"</b>"+"<p><b>Reason:</b>"+leaveSchema.description // html body
+        html: "<p><b>You</b>"+" applied for "+myLeaveType+" "+"<b>"+leaveSchema.leaveType+"</b>"+" leave from "+"<b>"+myStartDate+"</b>"+" to "+"<b>"+myEndDate+"</b>"+"<p><b>Reason:</b>"+leaveSchema.description+"<p><b>No of days</b> : "+leaveDuration // html body
     };
     em.email(mailOptions);
     em.email(mailOptionsEmp);
