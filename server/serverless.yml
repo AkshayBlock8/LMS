@@ -7,13 +7,13 @@ provider:
   region: ap-south-1
   environment: 
     NODE_ENV: dev
-    DB: "mongodb+srv://lmssuperadmin:block8lms@lms-ily54.mongodb.net/test?retryWrites=true&w=majority"
-
+    DB: "mongodb+srv://lmssuperadmin:block8lms@lms-ily54.mongodb.net/main?retryWrites=true&w=majority"
+   
 functions:
   employ_app:
     handler: index.handler
     events:
       - http: ANY /
       - http: 'ANY {proxy+}'
-plugins:
-  - serverless-offline
+
+ 

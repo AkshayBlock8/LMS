@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose')
 const Joi = require("joi")
-const em = require('../utils/email')
+const em = require('../utils/email') 
 
 /**
  * @swagger
@@ -183,6 +183,7 @@ function invalidEmployeeName(employee, names) {
 }
 
 router.post('/', async (req, res) => { 
+    console.log("ASAS")
     let validationResult = validate(req.body);
     if(validationResult.error) return sendValidationError(validationResult.error, res);
 
@@ -219,19 +220,20 @@ router.post('/', async (req, res) => {
     var d2 =new Date(req.body.endDate);
     var myEndDate = d2.getDate() + "/" + (d2.getMonth() + 1) + "/" + d2.getFullYear()
     let mailOptions ={
-        from: '"Admin LMS" lmsblock8@gmail.com', // sender address
+        from: 'lmsblock8@gmail.com', // sender address
         to: approver.email, // list of receivers
         subject: ""+leaveSchema.leaveType.charAt(0).toUpperCase()+leaveSchema.leaveType.slice(1)+" leave applied by "+employee.firstName, // Subject line
         // text: "Hello world?", // plain text body
         html: "<p><b>"+employee.firstName+"</b>"+" applied for a "+"<b>"+leaveSchema.leaveType+"</b>"+" leave from "+"<b>"+myStartDate+"</b>"+" to "+"<b>"+myEndDate+"</b>"+"<p><b>Reason:</b>"+leaveSchema.description // html body
     };
     let mailOptionsEmp ={
-        from: '"Admin LMS" lmsblock8@gmail.com', // sender address
+        from: 'lmsblock8@gmail.com', // sender address
         to: employee.email, // list of receivers
         subject: ""+leaveSchema.leaveType.charAt(0).toUpperCase()+leaveSchema.leaveType.slice(1)+" leave successfully applied by "+employee.firstName, // Subject line
         // text: "Hello world?", // plain text body
         html: "<p><b>You</b>"+" applied for a "+"<b>"+leaveSchema.leaveType+"</b>"+" leave from "+"<b>"+myStartDate+"</b>"+" to "+"<b>"+myEndDate+"</b>"+"<p><b>Reason:</b>"+leaveSchema.description // html body
     };
+    console.log("I have reached here!!");
     em.email(mailOptions);
     em.email(mailOptionsEmp);
     res.send(leave);
@@ -307,7 +309,7 @@ router.put('/', async (req, res) => {
         leave.status = "rejected";
         await leave.save();
         let mailOptionsRejected ={
-            from: '"Admin LMS" lmsblock8@gmail.com', // sender address
+            from: 'lmsblock8@gmail.com', // sender address
             to: employee.email, // list of receivers
             subject: "[REJECTED]-"+leave.leaveType.charAt(0).toUpperCase()+leave.leaveType.slice(1)+" leave applied by "+employee.firstName, // Subject line
             // text: "Hello world?", // plain text body
@@ -322,7 +324,7 @@ router.put('/', async (req, res) => {
         leave.status = "approved";
         await leave.save();
         let mailOptionsApproved ={
-            from: '"Admin LMS" lmsblock8@gmail.com', // sender address
+            from: 'lmsblock8@gmail.com', // sender address
             to: employee.email, // list of receivers
             subject: "[APPROVED]-"+leave.leaveType.charAt(0).toUpperCase()+leave.leaveType.slice(1)+" leave applied by "+employee.firstName, // Subject line
             // text: "Hello world?", // plain text body

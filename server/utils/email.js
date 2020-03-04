@@ -1,20 +1,45 @@
-require('dotenv').config();
-const nodemailer = require("nodemailer");
+var AWS = require("aws-sdk");
+var nodemailer = require("nodemailer");
 
-async function emailservice(mailOptions) {
-    console.log(mailOptions)
-    let transporter = nodemailer.createTransport({
-        service:'gmail',
-        auth:{
-            user: process.env.EMAIL,
-            pass: process.env.PASSWORD
+AWS.config.update({
+  region: "ap-south-1",
+  
+})
+
+var ses = new AWS.SES({
+  apiVersion: "2010-12-01",
+  region: "ap-south-1"
+});
+
+var s3 = new AWS.S3();
+
+function emailservice(mailOptions) {
+  var mailOPtions = {
+    from: mailOptions.from,
+    to: mailOptions.to,
+    subject:mailOptions.subject,
+    html: mailOptions.html,
+    
+    // bcc: Any BCC address you want here in an array,
+    };
+    
+    // create Nodemailer SES transporter
+    var transporter = nodemailer.createTransport({
+        SES: ses
+    });
+
+    
+    transporter.sendMail(mailOPtions, function (err, info) {
+        if (err) {
+            console.log("Error sending email",err);
+            
+        } else {
+            console.log("Email sent successfully");
+            
         }
     });
 
-    let info = await transporter.sendMail(mailOptions);
-
-    console.log("Message sent: %s", info.messageId);
-    // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
-}
-
+};
 exports.email=emailservice;
+
+

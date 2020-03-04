@@ -12,7 +12,7 @@
       "region": "ap-south-1",
       "environment": {
         "NODE_ENV": "dev",
-        "DB": "mongodb+srv://lmssuperadmin:block8lms@lms-ily54.mongodb.net/test?retryWrites=true&w=majority"
+        "DB": "mongodb+srv://lmssuperadmin:block8lms@lms-ily54.mongodb.net/main?retryWrites=true&w=majority"
       },
       "versionFunctions": true,
       "remoteFunctionData": null,
@@ -164,7 +164,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/lms-app/dev/1583133415873-2020-03-02T07:16:55.873Z/lms-app.zip"
+                "S3Key": "serverless/lms-app/dev/1583301374905-2020-03-04T05:56:14.905Z/lms-app.zip"
               },
               "FunctionName": "lms-app-dev-employ_app",
               "Handler": "index.handler",
@@ -180,7 +180,7 @@
               "Environment": {
                 "Variables": {
                   "NODE_ENV": "dev",
-                  "DB": "mongodb+srv://lmssuperadmin:block8lms@lms-ily54.mongodb.net/test?retryWrites=true&w=majority"
+                  "DB": "mongodb+srv://lmssuperadmin:block8lms@lms-ily54.mongodb.net/main?retryWrites=true&w=majority"
                 }
               }
             },
@@ -189,14 +189,14 @@
               "IamRoleLambdaExecution"
             ]
           },
-          "EmployUnderscoreappLambdaVersion1YtxHhwcrUQlsX6gk8KADVYPsZAi0c0XJUsLYJk8T8": {
+          "EmployUnderscoreappLambdaVersionOouhQPgtL88LD9FAIEnUCICDs3DwrpMeVjmxFlo4": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "EmployUnderscoreappLambdaFunction"
               },
-              "CodeSha256": "XQrjJicT5NY8YN7PQDJ6DacN6Kxoo3D/AbUaKxVSV/U="
+              "CodeSha256": "BNEqA4pXpUyiWYrscuVM89+I9R0UFOcWndJ8yUjiT+A="
             }
           },
           "ApiGatewayRestApi": {
@@ -315,7 +315,7 @@
               "MethodResponses": []
             }
           },
-          "ApiGatewayDeployment1583133402296": {
+          "ApiGatewayDeployment1583301359333": {
             "Type": "AWS::ApiGateway::Deployment",
             "Properties": {
               "RestApiId": {
@@ -375,7 +375,7 @@
           "EmployUnderscoreappLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "EmployUnderscoreappLambdaVersion1YtxHhwcrUQlsX6gk8KADVYPsZAi0c0XJUsLYJk8T8"
+              "Ref": "EmployUnderscoreappLambdaVersionOouhQPgtL88LD9FAIEnUCICDs3DwrpMeVjmxFlo4"
             }
           },
           "ServiceEndpoint": {
@@ -472,9 +472,6 @@
       },
       "vpc": {}
     },
-    "plugins": [
-      "serverless-offline"
-    ],
     "pluginsData": {},
     "functions": {
       "employ_app": {
@@ -493,7 +490,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "EmployUnderscoreappLambdaVersion1YtxHhwcrUQlsX6gk8KADVYPsZAi0c0XJUsLYJk8T8"
+        "versionLogicalId": "EmployUnderscoreappLambdaVersionOouhQPgtL88LD9FAIEnUCICDs3DwrpMeVjmxFlo4"
       }
     },
     "serviceFilename": "serverless.yml",
@@ -502,7 +499,7 @@
     "artifact": "G:\\LMS\\server\\.serverless\\lms-app.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/lms-app/dev/1583133415873-2020-03-02T07:16:55.873Z",
+    "artifactDirectoryName": "serverless/lms-app/dev/1583301374905-2020-03-04T05:56:14.905Z",
     "artifact": "lms-app.zip"
   }
 }
