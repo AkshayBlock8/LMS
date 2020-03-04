@@ -152,7 +152,10 @@ function sendValidationError(error, res) {
     return res.status(400).send(error.details[0].message);
 }
 
-function getLeaveDuration(start, end) {
+function getLeaveDuration(start, end, halfDay) {
+    if(halfDay)
+        return 0.5;
+
     let startDate = new Date(start)
     let endDate = new Date(end)
     let count = 0;
@@ -182,38 +185,36 @@ function invalidEmployeeName(employee, names) {
     return false;
 }
 
-router.post('/', async (req, res) => { 
-    let validationResult = validate(req.body);
+router.post('/', async (req, res) => {
+    let leaveRequest = _.pick(req.body, ["employeeId", "approverId", "firstName", "lastName", "startDate", "endDate", "leaveType", "halfDay", "description", "status"])
+    let validationResult = validate(leaveRequest);
     if(validationResult.error) return sendValidationError(validationResult.error, res);
 
-    if(invalidDays(req.body.startDate, req.body.endDate, req.body.halfDay)) return res.status(400).send('for half day start date and end date should be same')
+    if(invalidDays(leaveRequest.startDate, leaveRequest.endDate, leaveRequest.halfDay)) return res.status(400).send('for half day start date and end date should be same')
     
-    let employee = await Employee.findById(mongoose.Types.ObjectId(req.body.employeeId));
+    let employee = await Employee.findById(mongoose.Types.ObjectId(leaveRequest.employeeId));
     if(!employee) return res.status(400).send('Invalid Employee Id')
 
-    if(invalidEmployeeName(employee, _.pick(req.body, ["firstName", "lastName"]))) return res.status(400).send('employee names do not match the emp id')
+    if(invalidEmployeeName(employee, _.pick(leaveRequest, ["firstName", "lastName"]))) return res.status(400).send('employee names do not match the emp id')
 
-    let approver = await Employee.findById(mongoose.Types.ObjectId(req.body.approverId));
+    let approver = await Employee.findById(mongoose.Types.ObjectId(leaveRequest.approverId));
     if(!approver) return res.status(400).send('Invalid Approver Id')
 
-    if(employee.approver !== approver._id.toString()) return res.status(400).send(`${req.body.approverId} is not the approver of ${req.body.employeeId}`)
+    if(employee.approver !== approver._id.toString()) return res.status(400).send(`${leaveRequest.approverId} is not the approver of ${leaveRequest.employeeId}`)
 
-    let leaveDuration = getLeaveDuration(req.body.startDate, req.body.endDate);
-    if(employee.available[req.body.leaveType] < leaveDuration) return res.status(400).send('Employee Does not have that many leaves')
+    let daysCount = getLeaveDuration(leaveRequest.startDate, leaveRequest.endDate, leaveRequest.halfDay);
+    if(employee.available[leaveRequest.leaveType] < daysCount) return res.status(400).send('Employee Does not have that many leaves')
+    leaveRequest.daysCount = daysCount
 
-    if(req.body.halfDay) {
-        employee.available[req.body.leaveType] -= 0.5
-        employee.availed[req.body.leaveType] += 0.5    
-    } else {
-        employee.available[req.body.leaveType] -= leaveDuration
-        employee.availed[req.body.leaveType] += leaveDuration    
-    }
+    employee.available[req.body.leaveType] -= leaveRequest.daysCount
+    employee.availed[req.body.leaveType] += leaveRequest.daysCount
+
     await employee.save()
-    let leaveSchema = _.pick(req.body, ["employeeId", "approverId", "firstName", "lastName", "startDate", "endDate", "leaveType", "halfDay", "description", "status"])
 
-    leaveSchema.status = "pending"
-    leave = new Leave(leaveSchema);
+    leaveRequest.status = "pending"
+    leave = new Leave(leaveRequest);
     await leave.save();
+
     var d1 =new Date(req.body.startDate);
     var myStartDate = d1.getDate() + "/" + (d1.getMonth() + 1) + "/" + d1.getFullYear()
     var d2 =new Date(req.body.endDate);
@@ -289,6 +290,7 @@ router.get('/approver/:employeeId/:status', async (req, res) => {
 })
 
 router.put('/', async (req, res) => {
+    let leaveUpdateRequest = _.pick(req.body, ["employeeId", "approverId", "startDate", "endDate", "leaveType", "halfDay", "description", "firstName", "lastName"])
     let validationResult = validate(_.pick(req.body, ["employeeId", "approverId", "startDate", "endDate", "leaveType", "halfDay", "description", "firstName", "lastName"]));
     if(validationResult.error) return sendValidationError(validationResult.error, res);
 
@@ -306,13 +308,9 @@ router.put('/', async (req, res) => {
     if(req.body.status === "rejected" && leave.status === "pending") {
         const employee = await Employee.findById(req.body.employeeId)
         if(!employee) return res.status(400).send('Invalid Employee Id')
-        if(leave.halfDay) {
-            employee.available[req.body.leaveType] += 0.5;
-            employee.availed[req.body.leaveType] -= 0.5;    
-        } else {
-            employee.available[req.body.leaveType] += getLeaveDuration(req.body.startDate, req.body.endDate);
-            employee.availed[req.body.leaveType] -= getLeaveDuration(req.body.startDate, req.body.endDate);    
-        }
+
+        employee.available[req.body.leaveType] += leave.daysCount;
+        employee.availed[req.body.leaveType] -= leave.daysCount;
         await employee.save();
         leave.status = "rejected";
         await leave.save();

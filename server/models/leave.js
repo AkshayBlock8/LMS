@@ -11,6 +11,7 @@
  *          - lastName
  *          - startDate
  *          - endDate
+ *          - daysCount
  *          - leaveType
  *          - halfDay
  *          - status
@@ -27,6 +28,8 @@
  *              type: string
  *          endDate:
  *              type: string
+ *          daysCount:
+ *              type: Number
  *          leaveType:
  *              type: string
  *          halfDay:
@@ -67,6 +70,10 @@ const mongoose = require('mongoose');
     },
     endDate: {
         type: Date,
+        required: true
+    },
+    daysCount: {
+        type: Number,
         required: true
     },
     leaveType: {
