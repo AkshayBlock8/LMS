@@ -57,16 +57,13 @@ app.use('/api/employee', employee);
 app.use('/api/auth', auth);
 app.use('/api/leave', leave);
 
-//mongoose.connect('mongodb://localhost/LMS', { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true})
-mongoose.connect('mongodb+srv://lmssuperadmin:block8lms@lms-ily54.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true})
+
+
+// mongoose.connect('mongodb://localhost/LMS', { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true})
+
+mongoose.connect('mongodb+srv://lmssuperadmin:block8lms@lms-ily54.mongodb.net/main?retryWrites=true&w=majority', { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true})
     .then(() => console.log("Sccessfully connected to mongo db"))
     .catch((err) => console.log(`Error in connection: ${err}`))
-module.exports.handler = serverless(app, {
-  request: function (req, event, context) {
-    context.callbackWaitsForEmptyEventLoop = false
-    req.event = event
-    req.context = context
-  }
-});
-//const port = process.env.PORT || 5000;
-//app.listen(port, () => console.log(`Listening to PORT ${port}...`))
+ module.exports.handler = serverless(app);
+// const port = process.env.PORT || 5000;
+// app.listen(port, () => console.log(`Listening to PORT ${port}...`))
